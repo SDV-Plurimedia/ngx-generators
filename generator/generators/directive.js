@@ -12,7 +12,7 @@ module.exports = {
       //console.log(this);
 
 var classContent =
-`import {Directive, ElementRef, Renderer, Input} from 'angular2/core';
+`import {Directive, ElementRef, Renderer, Input} from '@angular2/core';
 
 @Directive({
   selector: '[`+filename+`]'
