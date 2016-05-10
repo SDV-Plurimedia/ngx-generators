@@ -25,16 +25,13 @@ module.exports = {
           var distcomponentpath = componentpath.replace("./","./dist/components");
           var className = helpers.camelize(filename.replace(".ts",""));
 
-route += `
-{
-  path: '`+path+`',
-  component: `+className+`Component,
-  /*component: ComponentProxyFactory({
-    path: '`+distcomponentpath+`',
-    provide: m => m.`+className+`Component
-  }),*/
-  name: '`+className+`'
-},`;
+          /*component: ComponentProxyFactory({
+            path: '`+distcomponentpath+`',
+            provide: m => m.`+className+`Component
+          }),*/
+
+route += `{ path: '`+path+`', component: `+className+`Component, name: '`+className+`' },
+`;
 
 imports += `import {`+className+`Component} from '`+componentpath+`';
 `;
@@ -42,17 +39,16 @@ imports += `import {`+className+`Component} from '`+componentpath+`';
         }
     });
 
-
     helpers.getFile('app/components/app.ts',(data)=>{
-      var ph_debut = "//ROUTE AUTOMATIQUE DEBUT\n";
-      var ph_fin= "\n//ROUTE AUTOMATIQUE FIN";
+      route = "\n"+route+"\n";
+      var ph_debut = "//ROUTE AUTOMATIQUE DEBUT";
+      var ph_fin= "//ROUTE AUTOMATIQUE FIN";
       var retour = helpers.placeInPlaceHolder(data,ph_debut,ph_fin,route);
 
-      var phi_debut = "//IMPORT AUTOMATIQUE DEBUT\n";
-      var phi_fin= "\n//IMPORT AUTOMATIQUE FIN";
+      imports = "\n"+imports+"\n";
+      var phi_debut = "//IMPORT AUTOMATIQUE DEBUT";
+      var phi_fin= "//IMPORT AUTOMATIQUE FIN";
       var retour = helpers.placeInPlaceHolder(retour,phi_debut,phi_fin,imports);
-
-
 
       console.log("re-ecriture du fichier app/components/app.ts");
       helpers.createFile("app/components/","app.ts",retour);
