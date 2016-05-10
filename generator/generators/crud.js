@@ -25,8 +25,8 @@ module.exports = {
 
 
     var componentListContent = `
-    import {Component} from '@angular2/core';
-    import {Router}  from '@angular2/router';
+    import {Component} from '@angular/core';
+    import {Router}  from '@angular/router';
     import {`+modelName+`} from '../../../models/`+model+`';
     import {DatatableComponent} from '../../_widgets/datatable/datatable';
     import {`+modelName+`Service} from '../../../services/data/`+model+`';
@@ -113,8 +113,8 @@ module.exports = {
 //Pour la page d'edition
 
 var componentEditContent = `
-import {Component, Host} from '@angular2/core';
-import {Router, RouterLink, RouteParams}  from '@angular2/router';
+import {Component, Host} from '@angular/core';
+import {Router, RouterLink, RouteParams}  from '@angular/router';
 
 import {`+modelName+`}               from '../../../../models/`+model+`';
 import {`+modelName+`Service}        from '../../../../services/data/`+model+`';
@@ -215,9 +215,9 @@ export class `+className+`EditComponent {
 
 
 var serviceContent = `
-import {Injectable, Output, EventEmitter} from "@angular2/core";
+import {Injectable, Output, EventEmitter} from "@angular/core";
 import {Observable} from 'rxjs/Observable';
-import {Request, Response, Http} from '@angular2/http';
+import {Request, Response, Http} from '@angular/http';
 import {RESTClient, GET, PUT, POST, DELETE, BaseUrl, Headers, DefaultHeaders, Path, Body, Query, Produces, MediaType} from './angular2-rest';
 import {`+modelName+`} from '../../models/`+model+`';
 declare var GLOBAL_CONFIG;

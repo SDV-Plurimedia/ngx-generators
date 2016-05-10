@@ -18,7 +18,7 @@ module.exports = {
     var className = helpers.camelize(filename);
 
 var componentContent =
-`import {Component} from '@angular2/core';
+`import {Component} from '@angular/core';
 @Component({
   selector: '`+filename+`',
   templateUrl: '`+dirname+'/'+filename+".html"+`',

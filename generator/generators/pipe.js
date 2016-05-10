@@ -12,7 +12,7 @@ module.exports = {
       //console.log(this);
 
 var classContent =
-`import {Pipe, PipeTransform} from '@angular2/core';
+`import {Pipe, PipeTransform} from '@angular/core';
 /*
 Exemple: {{ valeur |  `+filename+`:arg1 }}
 */

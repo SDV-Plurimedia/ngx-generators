@@ -12,7 +12,7 @@ module.exports = {
     var className = helpers.camelize(filename);
 
 var componentContent =
-`import {Component, Host} from '@angular2/core';
+`import {Component, Host} from '@angular/core';
 @Component({
   selector: '`+filename+`',
   templateUrl: '`+dirname+'/'+filename+".html"+`',
