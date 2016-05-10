@@ -19,7 +19,9 @@ var componentContent =
   styleUrls: ['`+dirname+'/'+filename+`.css']
 })
 export class `+className+`Component {
-  constructor(@Host() private parent: any){
+  @Host() private parent: any;
+  
+  constructor(){
   }
   ngOnInit() {
     // Properties are resolved
