@@ -42,6 +42,10 @@ module.exports = {
     });
   },
 
+  copyFile(source,destination){
+    fs.createReadStream(source).pipe(fs.createWriteStream(destination));
+  },
+
   //remplace debut(.*)fin par donnee dans input
   replacePlaceHolder(input,debut,fin,donnee){
       var reg_term = debut+"([^]*)"+fin;
