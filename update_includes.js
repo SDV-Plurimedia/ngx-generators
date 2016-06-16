@@ -5,6 +5,7 @@ var helpers = require('./helpers');
 var includes_front = [
   "node_modules/tether/dist/css/tether.min.css",
   "node_modules/bootstrap/dist/css/bootstrap.css",
+  "node_modules/bootstrap/dist/css/bootstrap.css.map",
   "node_modules/jquery/dist/jquery.min.js",
   "node_modules/tether/dist/js/tether.min.js",
   "node_modules/bootstrap/dist/js/bootstrap.js",
