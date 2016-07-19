@@ -1,0 +1,103 @@
+import {Component} from '@angular/core';
+import {Router, RouterOutlet}  from '@angular/router-deprecated';
+import {DatatableComponent} from '../../_widgets/datatable/datatable';
+import {BootboxService} from '../../../services/bootbox';
+import {NotificationService} from '../../../services/notification';
+import {BreadcrumbService} from "../../../services/breadcrumb";
+import {LoaderComponent} from '../../_widgets/loader/loader'
+
+import {~~modelName~~}               from '../../../../models/~~model~~';
+import {~~modelName~~Service}        from '../../../../services/data/~~model~~';
+
+~~STOP~~
+
+@Component({
+  selector: '~~filename~~-edit',
+  template: \`<h2>{{action}} de ~~model~~</h2>
+  <div class="row" *ngIf="instance_~~modelName~~">
+
+    <div class="col-lg-8" *ngFor="#champ of structure" >
+      <div class="form-group">
+        <label [attr.for]="champ.id">{{champ.label}}</label>
+        <template [ngIf]="champ.type=='string'">
+          <input type="text" [(ngModel)]="~~model~~[champ.id]" class="form-control" required name="{{champ.id}}" >
+        </template>
+        <template [ngIf]="champ.type=='number'">
+          <input type="number" [(ngModel)]="~~model~~[champ.id]" class="form-control" required name="{{champ.id}}" >
+        </template>
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="form-group pull-right">
+      <button class="btn btn-success" (click)="save()">Enregistrer</button>
+      <button class="btn btn-danger" [routerLink]="['~~className~~']" >Annuler</button>
+    </div>
+  </div>\`,
+  directives: [RouterLink],
+  providers: [~~modelName~~Service, NotificationService]
+})
+
+export class ~~className~~EditComponent {
+  public instance_~~modelName~~: ~~modelName~~;
+  public action : string;
+  public structure: any[] = null;
+  /*
+  //decommenter ceci pour fixer la structure
+  public structure = [
+      { id: "id", label: "ID"},
+      { id: "name", label: "Nom du ~~model~~"}
+  ];*/
+
+  constructor(private _~~modelName~~Service : ~~modelName~~Service,
+              private _notifService : NotificationService,
+              private _router: Router, private _routeParams: RouteParams){
+
+    let id = this._routeParams.get('id');
+
+    if(id != null) {
+      this.action = "Edition";
+      this._~~modelName~~Service.getById(id).subscribe( resp => this.instance_~~modelName~~ = resp.~~model~~ );
+    }
+    else {
+      this.action = "Création";
+      this.instance_~~modelName~~ = new ~~modelName~~();
+    }
+
+    //si on ne définie pas 'structure' manuellement, on fais ici une structure dynamique
+    if(this.structure === null){
+      console.log("construction de la structure");
+      this.structure = [];
+      let inst = new ~~modelName~~();
+      let proprietes = Object.keys( inst );
+      if(proprietes.length == 0){
+        console.log("Attention, votre modèle ne contient pas de propriété avec des valeurs par défaut! Donc votre structure de CRUD sera vide...")
+      }
+      proprietes.forEach((key,index)=>{
+        // key: the name of the object key
+        // index: the ordinal position of the key within the object
+        console.log(key+" => "+typeof inst[key]);
+        this.structure.push({
+          id: key, label: key.toUpperCase(), type: (typeof inst[key])
+        });
+      });
+    }
+
+  }
+  ngOnInit() {
+    // Properties are resolved
+  }
+
+  save() {
+   this._~~modelName~~Service.post(this.instance_~~modelName~~).subscribe((result) => {
+      if(result){
+        this._router.navigate(['~~className~~']);
+      }
+      else {
+        this._notifService.error("Une erreur est survenue lors de l'enregistrement.");
+      }
+    });
+  }
+
+}
