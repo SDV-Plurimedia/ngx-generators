@@ -1,20 +1,17 @@
 import {Component} from '@angular/core';
 import {Router, RouterOutlet}  from '@angular/router-deprecated';
-import {DatatableComponent} from '../../_widgets/datatable/datatable';
-import {BootboxService} from '../../../services/bootbox';
-import {NotificationService} from '../../../services/notification';
-import {BreadcrumbService} from "../../../services/breadcrumb";
-import {LoaderComponent} from '../../_widgets/loader/loader'
+import {DatatableComponent} from '../_widgets/datatable/datatable';
+import {BootboxService} from '../../services/bootbox';
+import {NotificationService} from '../../services/notification';
+import {BreadcrumbService} from "../../services/breadcrumb";
+import {LoaderComponent} from '../_widgets/loader/loader'
 
-import {~~modelName~~}               from '../../../../models/~~model~~';
-console.log(~~model~~);
-import {~~modelName~~Service}        from '../../../../services/data/~~model~~';
-
-~~STOP~~
+import {~~modelName~~}               from '../../models/~~model~~';
+import {~~modelName~~Service}        from '../../services/data/~~model~~';
 
 @Component({
   selector: '~~filename~~-edit',
-  template: \`<h2>{{action}} de ~~model~~</h2>
+  template: `<h2>{{action}} de ~~model~~</h2>
   <div class="row" *ngIf="instance_~~modelName~~">
 
     <div class="col-lg-8" *ngFor="#champ of structure" >
@@ -35,7 +32,7 @@ import {~~modelName~~Service}        from '../../../../services/data/~~model~~';
       <button class="btn btn-success" (click)="save()">Enregistrer</button>
       <button class="btn btn-danger" [routerLink]="['~~className~~']" >Annuler</button>
     </div>
-  </div>\`,
+  </div>`,
   directives: [RouterLink],
   providers: [~~modelName~~Service, NotificationService]
 })

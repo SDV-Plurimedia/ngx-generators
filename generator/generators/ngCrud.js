@@ -13,6 +13,38 @@ module.exports = {
         }
 
         var createFiles = function(url, model, api_endpoint) {
+
+
+            var getFileAndReplaceOccurences = function(path, last) {
+                var content = "";
+
+                const readline = require('readline');
+                const fs = require('fs');
+                const options = {
+                    flags: 'r',
+                    encoding: null,
+                    fd: null,
+                    mode: 0o666,
+                    autoClose: true
+                };
+
+                const rl = readline.createInterface({
+                    input: fs.createReadStream(path, options)
+                });
+
+                rl.on('line', function(line) {
+                    var value = line;
+                    if (value.indexOf("~~") > -1)
+                        for (var key in conf)
+                            value = replaceAll(value, key, conf[key]);
+                    content = content + value + '\n';
+                }).on('close', () => {
+                    if (last == true)
+                        write();
+                    return content;
+                });
+            }
+
             //on mets des valeurs par défaut au besoin
             url = (typeof url !== 'undefined' && url !== "") ? url : "crud/users";
             model = (typeof model !== 'undefined' && model !== "") ? model : "user";
@@ -40,72 +72,36 @@ module.exports = {
                 'modelName': modelName
             }
 
-            // Pour le composant
-            // var componentListContent = ;
+            var componentListContent = getFileAndReplaceOccurences("bin/generator/templates/ngCrud/component.ts.base", false);
+            var componentEditContent = getFileAndReplaceOccurences("bin/generator/templates/ngCrud/componentEdit.ts.base", false);
+            var serviceContent = getFileAndReplaceOccurences("bin/generator/templates/ngCrud/service.ts.base", true);
 
-            const readline = require('readline');
-            const fs = require('fs');
-            const options = {
-                flags: 'r',
-                encoding: null,
-                fd: null,
-                mode: 0o666,
-                autoClose: true
-            };
+            var write = function() {
 
-            const rl = readline.createInterface({
-                input: fs.createReadStream('bin/generator/templates/ngCrud/component.ts.base', options)
-            });
-
-            var read = true;
-            var componentListContent = "tmp1";
-            var componentEditContent = "tmp2";
-            var serviceContent = "tmp3";
-
-            rl.on('line', function(line) {
-                if (line == "~~STOP~~")
-                    read = false;
-                if (read) {
-                    var value = line;
-                    if (value.indexOf("~~") > -1)
-                        for (var key in conf)
-                            value = replaceAll(value, key, conf[key]);
-
-                    componentListContent = componentListContent + value + '\n';
-                }
-            }).on('close', () => {
-                console.log("result: ", componentListContent);
-                process.exit(0);
-            });
-
-            var componentListContent = "tmp1";
-            var componentEditContent = "tmp2";
-            var serviceContent = "tmp3";
-
-            var asq = require("async");
-            asq.parallel(
-                [
-                    (cb) => {
-                        helpers.createFileIfNotExist(dirname, filename + ".ts", componentListContent, cb)
-                    },
-                    (cb) => {
-                        helpers.createFileIfNotExist(dirname + "/edit", filename + "-edit.ts", componentEditContent, cb)
-                    },
-                    (cb) => {
-                        helpers.createFileIfNotExist("app/services/data", model + ".ts", serviceContent, cb)
-                    }
-                ],
-                function() {
-                    //aprés avoir tout ecris
-                    //console.log("N'oubliez pas de rajouter la route dans votre fichier app.ts");
-                    //console.log("{path: '"+url+"', name: '"+className+"', component: "+className+"Component }");
-                    helpers.askData('Voulez vous regénérer automatiquement les routes? ( y / n) ', (reponse) => {
-                        if (reponse == 'y') {
-                            var route = require("./route");
-                            route.generate();
-                            helpers.printSeparator();
-                            var filename = url.replace(/\//g, '-');
-                            console.log(`N'oubliez pas de rajouter dans app.ts, la route de modification suivante:
+                var asq = require("async");
+                asq.parallel(
+                    [
+                        (cb) => {
+                            helpers.createFileIfNotExist(dirname, filename + ".ts", componentListContent, cb)
+                        },
+                        (cb) => {
+                            helpers.createFileIfNotExist(dirname + "/edit", filename + "-edit.ts", componentEditContent, cb)
+                        },
+                        (cb) => {
+                            helpers.createFileIfNotExist("app/services/data", model + ".ts", serviceContent, cb)
+                        }
+                    ],
+                    function() {
+                        //aprés avoir tout ecris
+                        //console.log("N'oubliez pas de rajouter la route dans votre fichier app.ts");
+                        //console.log("{path: '"+url+"', name: '"+className+"', component: "+className+"Component }");
+                        helpers.askData('Voulez vous regénérer automatiquement les routes? ( y / n) ', (reponse) => {
+                            if (reponse == 'y') {
+                                var route = require("./route");
+                                route.generate();
+                                helpers.printSeparator();
+                                var filename = url.replace(/\//g, '-');
+                                console.log(`N'oubliez pas de rajouter dans app.ts, la route de modification suivante:
 
                   {
                     path: '` + url + `/edit/:id',
@@ -117,11 +113,12 @@ module.exports = {
                   },
 
                    `);
-                        } else {
-                            console.log('Ok, Pas de modification de route...')
-                        }
+                            } else {
+                                console.log('Ok, Pas de modification de route...')
+                            }
+                        });
                     });
-                });
+            }
 
             return true;
         }

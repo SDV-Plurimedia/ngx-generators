@@ -1,0 +1,1 @@
+import {Router, RouterOutlet}  from '@angular/router-deprecated';
