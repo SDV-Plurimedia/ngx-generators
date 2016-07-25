@@ -1,1 +1,119 @@
-import {Router, RouterOutlet}  from '@angular/router-deprecated';
+import {Router, RouterOutlet, RouteParams}  from '@angular/router-deprecated';
+import {Component, Host} from '@angular/core';
+
+import {~~modelName~~}               from '../../../models/~~model~~';
+import {~~modelName~~Service}        from '../../../services/data/~~model~~';
+import {NotificationService}          from '../../../services/notification';
+
+@Component({
+  selector: '~~filename~~-edit',
+  template: `<h2>{{action}} de ~~model~~</h2>
+  <div class="row" *ngIf="instance_~~modelName~~">
+
+    <div class="col-lg-8" *ngFor="let champ of structure" >
+      <div class="form-group">
+        <label [attr.for]="champ.id">{{champ.label}}</label>
+        <template [ngIf]="champ.type=='string'">
+          <input type="text" [(ngModel)]="instance_~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
+        </template>
+        <template [ngIf]="champ.type=='number'">
+          <input type="number" [(ngModel)]="instance_~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
+        </template>
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="form-group pull-right">
+      <button class="btn btn-success" (click)="save()">Enregistrer</button>
+      <a class="btn btn-danger" routerLink="[~~className~~]" >Annuler</a>
+    </div>
+  </div>`,
+  directives: [RouterOutlet],
+  providers: [~~modelName~~Service, NotificationService]
+})
+
+export class ~~className~~EditComponent {
+  public instance_~~modelName~~: ~~modelName~~;
+  public action : string;
+  public structure: any[] = null;
+  public hiddenFields = [];
+  public id:string;
+  /*
+  //decommenter ceci pour fixer la structure
+  public structure = [
+      { id: "id", label: "ID"},
+      { id: "name", label: "Nom du ~~model~~"}
+  ];*/
+
+  constructor(private _~~modelName~~Service : ~~modelName~~Service,
+              private _notifService : NotificationService,
+              private _router: Router, private _routerParams: RouteParams){
+
+              let hidden = "abool";
+              this.hiddenFields = hidden.split(',');
+
+    this.id = this._routerParams.get('id');
+
+    if(this.id != null) {
+      this.action = "Edition";
+      this._~~modelName~~Service.getById(this.id).subscribe( resp => this.instance_~~modelName~~ = resp );
+    }
+    else {
+      this.action = "Création";
+      this.instance_~~modelName~~ = new ~~modelName~~();
+    }
+
+    //si on ne définie pas 'structure' manuellement, on fais ici une structure dynamique
+    if(this.structure === null){
+      console.log("construction de la structure");
+      this.structure = [];
+      let inst = new ~~modelName~~();
+      let proprietes = Object.keys( inst );
+      if(proprietes.length == 0){
+        console.log("Attention, votre modèle ne contient pas de propriété avec des valeurs par défaut! Donc votre structure de CRUD sera vide...")
+      }
+      proprietes.forEach((key,index)=>{
+      let skip = false;
+        // key: the name of the object key
+        // index: the ordinal position of the key within the object
+        this.hiddenFields.forEach(item => {
+            if (item == key)
+                skip = true;
+        });
+        console.log(key+" => "+typeof inst[key]);
+        if (key != '_id' && !skip) {
+          this.structure.push({
+            id: key, label: key.toUpperCase(), type: (typeof inst[key])
+          });
+          }
+      });
+    }
+
+  }
+  ngOnInit() {
+    // Properties are resolved
+  }
+
+  save() {
+  if (this.id)
+      this._~~modelName~~Service.put(this.id, this.instance_Test).subscribe(result => {
+          if (result) {
+              this._router.navigate(['GestionTest']);
+          }
+          else {
+              this._notifService.error("Une erreur est survenue lors de l'enregistrement.");
+          }
+      });
+  else
+   this._~~modelName~~Service.post(this.instance_~~modelName~~).subscribe((result) => {
+      if(result){
+        this._router.navigate(['~~className~~']);
+      }
+      else {
+        this._notifService.error("Une erreur est survenue lors de l'enregistrement.");
+      }
+    });
+  }
+
+}

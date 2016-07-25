@@ -4,46 +4,7 @@ module.exports = {
 
     generate: function(argv) {
 
-        var replaceAll = function(str, find, replace) {
-            // définit comment les balises des templates doivent être récupéré (ex: ~~modelName~~)
-            var baliseTpl = "~~";
-            var find = baliseTpl + find + baliseTpl;
-
-            return str.replace(new RegExp(find, 'g'), replace);
-        }
-
         var createFiles = function(url, model, api_endpoint) {
-
-
-            var getFileAndReplaceOccurences = function(path, last) {
-                var content = "";
-
-                const readline = require('readline');
-                const fs = require('fs');
-                const options = {
-                    flags: 'r',
-                    encoding: null,
-                    fd: null,
-                    mode: 0o666,
-                    autoClose: true
-                };
-
-                const rl = readline.createInterface({
-                    input: fs.createReadStream(path, options)
-                });
-
-                rl.on('line', function(line) {
-                    var value = line;
-                    if (value.indexOf("~~") > -1)
-                        for (var key in conf)
-                            value = replaceAll(value, key, conf[key]);
-                    content = content + value + '\n';
-                }).on('close', () => {
-                    if (last == true)
-                        write();
-                    return content;
-                });
-            }
 
             //on mets des valeurs par défaut au besoin
             url = (typeof url !== 'undefined' && url !== "") ? url : "crud/users";
@@ -65,6 +26,7 @@ module.exports = {
                 'url': url,
                 'api_endpoint': api_endpoint,
                 'absoluteDirname': absoluteDirname,
+                'hiddenFields': hiddenFields,
                 'dirname': dirname,
                 'filename': filename,
                 'className': className,
@@ -72,11 +34,27 @@ module.exports = {
                 'modelName': modelName
             }
 
-            var componentListContent = getFileAndReplaceOccurences("bin/generator/templates/ngCrud/component.ts.base", false);
-            var componentEditContent = getFileAndReplaceOccurences("bin/generator/templates/ngCrud/componentEdit.ts.base", false);
-            var serviceContent = getFileAndReplaceOccurences("bin/generator/templates/ngCrud/service.ts.base", true);
+            var asq = require("async");
+            asq.parallel([
+                    (cb) => {
+                        helpers.getFileAndReplaceOccurences("bin/generator/templates/ngCrud/component.ts.base", conf, cb);
+                    },
+                    (cb) => {
+                        helpers.getFileAndReplaceOccurences("bin/generator/templates/ngCrud/componentEdit.ts.base", conf, cb);
+                    },
+                    (cb) => {
+                        helpers.getFileAndReplaceOccurences("bin/generator/templates/ngCrud/service.ts.base", conf, cb);
+                    }
+                ],
+                function(err, results) {
+                    write(results);
+                }
+            )
 
-            var write = function() {
+            var write = function(results) {
+                var componentListContent = results[0];
+                var componentEditContent = results[1];
+                var serviceContent = results[2];
 
                 var asq = require("async");
                 asq.parallel(
@@ -119,17 +97,15 @@ module.exports = {
                         });
                     });
             }
-
             return true;
         }
 
-        // var url = helpers.askDataSync('Quelle url voulez vous pour votre page de CRUD? (exemple: crud/users ) ');
-        // var model = helpers.askDataSync('Sur quel modele se base cette page? (exemple: user) ');
-        // var api = helpers.askDataSync('A quelle API voulez vous connecter ( exemple: "http://jsonplaceholder.typicode.com/users" ou GLOBAL_CONFIG.api_url+"/user" )? ');
+        var url = helpers.askDataSync('Quelle URL voulez-vous pour votre page de CRUD? (exemple: crud/users) ');
+        var model = helpers.askDataSync('Sur quel modèle se base cette page? (exemple: user) ');
+        var api = helpers.askDataSync('A quelle API voulez-vous vous connecter ( exemple: GLOBAL_CONFIG.api_url+"/user" )? ');
+        var hiddenFields = helpers.askDataSync('Quels champs du modèle souhaitez-vous cacher ? (exemple : "complement,created_at") ');
 
-        var url = "gestion-test";
-        var model = "model-test";
-        var api = 'osseeef';
+        helpers.printSeparator();
 
         createFiles(url, model, api);
     }

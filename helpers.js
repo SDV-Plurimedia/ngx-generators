@@ -104,6 +104,48 @@ module.exports = {
         });
     },
 
+    replaceAll: function(str, find, replace) {
+        // définit comment les balises des templates doivent être récupéré (ex: ~~modelName~~)
+
+    },
+
+    test: function() {
+        console.log("test");
+    },
+
+    getFileAndReplaceOccurences: function(path, conf, cb) {
+        var content = "";
+
+        const readline = require('readline');
+        const fs = require('fs');
+        const options = {
+            flags: 'r',
+            encoding: null,
+            fd: null,
+            mode: 0o666,
+            autoClose: true
+        };
+
+        const rl = readline.createInterface({
+            input: fs.createReadStream(path, options)
+        });
+
+        rl.on('line', function(line) {
+            var value = line;
+            if (value.indexOf("~~") > -1)
+                for (var key in conf) {
+                    var baliseTpl = "~~";
+                    var find = baliseTpl + key + baliseTpl;
+
+                    value = value.replace(new RegExp(find, 'g'), conf[key]);
+                }
+            content = content + value + '\n';
+        }).on('close', () => {
+            cb(null, content);
+            return content;
+        });
+    },
+
     createFileIfNotExist: function(dirname, filename, content, cb) {
         fs.stat(dirname + '/' + filename, (err, stat) => {
             if (err !== null) {

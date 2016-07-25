@@ -10,58 +10,48 @@ import {~~modelName~~}               from '../../models/~~model~~';
 import {~~modelName~~Service}        from '../../services/data/~~model~~';
 
 @Component({
-  selector: '~~filename~~-edit',
-  template: `<h2>{{action}} de ~~model~~</h2>
-  <div class="row" *ngIf="instance_~~modelName~~">
-
-    <div class="col-lg-8" *ngFor="#champ of structure" >
-      <div class="form-group">
-        <label [attr.for]="champ.id">{{champ.label}}</label>
-        <template [ngIf]="champ.type=='string'">
-          <input type="text" [(ngModel)]="~~model~~[champ.id]" class="form-control" required name="{{champ.id}}" >
-        </template>
-        <template [ngIf]="champ.type=='number'">
-          <input type="number" [(ngModel)]="~~model~~[champ.id]" class="form-control" required name="{{champ.id}}" >
-        </template>
-      </div>
-    </div>
-
-  </div>
-  <div class="row">
-    <div class="form-group pull-right">
-      <button class="btn btn-success" (click)="save()">Enregistrer</button>
-      <button class="btn btn-danger" [routerLink]="['~~className~~']" >Annuler</button>
-    </div>
-  </div>`,
-  directives: [RouterLink],
-  providers: [~~modelName~~Service, NotificationService]
+  selector: '~~filename~~',
+  template: `
+  <h2>Gestion des ~~model~~s <button class="pull-right btn btn-info" (click)="add()"><i class="glyphicon glyphicon-plus"></i> Ajouter</button></h2>
+  <datatable [data]="~~modelName~~_tab" [structure]="structure" [buttons]="buttons" [parent_scope]="scope"></datatable>`,
+  directives: [DatatableComponent],
+  providers: [~~modelName~~Service, BootboxService]
 })
 
-export class ~~className~~EditComponent {
-  public instance_~~modelName~~: ~~modelName~~;
-  public action : string;
-  public structure: any[] = null;
+export class ~~className~~Component {
+  public ~~modelName~~_tab: ~~modelName~~[];
+  public structure = null;
+  public hiddenFields = [];
   /*
   //decommenter ceci pour fixer la structure
   public structure = [
       { id: "id", label: "ID"},
       { id: "name", label: "Nom du ~~model~~"}
   ];*/
-
-  constructor(private _~~modelName~~Service : ~~modelName~~Service,
-              private _notifService : NotificationService,
-              private _router: Router, private _routeParams: RouteParams){
-
-    let id = this._routeParams.get('id');
-
-    if(id != null) {
-      this.action = "Edition";
-      this._~~modelName~~Service.getById(id).subscribe( resp => this.instance_~~modelName~~ = resp.~~model~~ );
+  public buttons = [
+    {
+        text: 'Editer',
+        action: this.edit,
+        class: "btn btn-warning"
+    },
+    {
+        text: 'Supprimer',
+        action: this.confirmDelete,
+        class: "btn btn-danger"
     }
-    else {
-      this.action = "Création";
-      this.instance_~~modelName~~ = new ~~modelName~~();
-    }
+  ];
+  public scope = this;
+
+  constructor(private _~~modelName~~Service: ~~modelName~~Service, private _bootbox : BootboxService, private _router: Router){
+
+    let hidden = "~~hiddenFields~~";
+    this.hiddenFields = hidden.split(',');
+
+    _~~modelName~~Service.get().subscribe(response => {
+    if (response != null)
+    this.~~modelName~~_tab = response
+    });
+    _bootbox.setScope(this);
 
     //si on ne définie pas 'structure' manuellement, on fais ici une structure dynamique
     if(this.structure === null){
@@ -73,27 +63,39 @@ export class ~~className~~EditComponent {
         console.log("Attention, votre modèle ne contient pas de propriété avec des valeurs par défaut! Donc votre structure de CRUD sera vide...")
       }
       proprietes.forEach((key,index)=>{
+      let skip = false;
         // key: the name of the object key
         // index: the ordinal position of the key within the object
-        console.log(key+" => "+typeof inst[key]);
-        this.structure.push({
-          id: key, label: key.toUpperCase(), type: (typeof inst[key])
+        this.hiddenFields.forEach(item => {
+          if (item == key)
+          skip = true;
         });
+        if (key != '_id' && !skip)
+        {
+          this.structure.push({
+            id: key, label: key.toUpperCase()
+            });
+            }
       });
     }
-
-  }
-  ngOnInit() {
-    // Properties are resolved
   }
 
-  save() {
-   this._~~modelName~~Service.post(this.instance_~~modelName~~).subscribe((result) => {
-      if(result){
-        this._router.navigate(['~~className~~']);
-      }
-      else {
-        this._notifService.error("Une erreur est survenue lors de l'enregistrement.");
+  add() {
+    this._router.navigate(['~~className~~Edit']);
+  }
+
+  edit( data : ~~modelName~~) {
+    this._router.navigate(['~~className~~EditId', { id: data._id }] );
+  }
+
+  confirmDelete(data : ~~modelName~~) {
+    let id_to_delete = data._id;
+    this._bootbox.confirm('Etes-vous sûr de vouloir supprimer le ~~model~~ '+id_to_delete+' ?', (result: Boolean)=>{
+      if(result) {
+        this._~~modelName~~Service.deleteById(id_to_delete).subscribe((result) => {
+          let index = this.~~modelName~~_tab.indexOf(data);
+          this.~~modelName~~_tab.splice(index, 1);
+        });
       }
     });
   }
