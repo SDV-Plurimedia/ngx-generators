@@ -16,6 +16,7 @@ module.exports = {
             model = model.toLowerCase();
 
             //Pour la page de liste:
+            var hierarchy = helpers.getHierarchy(url);
             var absoluteDirname = "app/components/" + url;
             var dirname = "./" + absoluteDirname;
             var filename = url.replace(/\//g, '-');
@@ -31,7 +32,8 @@ module.exports = {
                 'filename': filename,
                 'className': className,
                 'model': model,
-                'modelName': modelName
+                'modelName': modelName,
+                'hierarchy': hierarchy
             }
 
             var asq = require("async");

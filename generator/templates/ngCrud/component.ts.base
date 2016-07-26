@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
 import {Router, RouterOutlet}  from '@angular/router-deprecated';
-import {DatatableComponent} from '../_widgets/datatable/datatable';
-import {BootboxService} from '../../services/bootbox';
-import {NotificationService} from '../../services/notification';
-import {BreadcrumbService} from "../../services/breadcrumb";
-import {LoaderComponent} from '../_widgets/loader/loader'
+import {DatatableComponent} from '~~hierarchy~~../_widgets/datatable/datatable';
+import {BootboxService} from '~~hierarchy~~../../services/bootbox';
+import {NotificationService} from '~~hierarchy~~../../services/notification';
+import {BreadcrumbService} from "~~hierarchy~~../../services/breadcrumb";
+import {LoaderComponent} from '~~hierarchy~~../_widgets/loader/loader'
 
-import {~~modelName~~}               from '../../models/~~model~~';
-import {~~modelName~~Service}        from '../../services/data/~~model~~';
+import {~~modelName~~}               from '~~hierarchy~~../../models/~~model~~';
+import {~~modelName~~Service}        from '~~hierarchy~~../../services/data/~~model~~';
 
 @Component({
   selector: '~~filename~~',

@@ -35,6 +35,14 @@ module.exports = {
         });
     },
 
+    getHierarchy(filename) {
+        var slashNumber = filename.split(/\//).length - 1;
+        var hierarchy = "";
+        for (var i = 0; i < slashNumber; i++)
+            hierarchy += "../";
+        return hierarchy;
+    },
+
     getFile(file, cb) {
         fs.readFile(file, (err, data) => {
             if (err) throw err;

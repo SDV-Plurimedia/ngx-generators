@@ -1,9 +1,9 @@
 import {Router, RouterOutlet, RouteParams}  from '@angular/router-deprecated';
 import {Component, Host} from '@angular/core';
 
-import {~~modelName~~}               from '../../../models/~~model~~';
-import {~~modelName~~Service}        from '../../../services/data/~~model~~';
-import {NotificationService}          from '../../../services/notification';
+import {~~modelName~~}               from '~~hierarchy~~../../../models/~~model~~';
+import {~~modelName~~Service}        from '~~hierarchy~~../../../services/data/~~model~~';
+import {NotificationService}          from '~~hierarchy~~../../../services/notification';
 
 @Component({
   selector: '~~filename~~-edit',
@@ -26,7 +26,7 @@ import {NotificationService}          from '../../../services/notification';
   <div class="row">
     <div class="form-group pull-right">
       <button class="btn btn-success" (click)="save()">Enregistrer</button>
-      <a class="btn btn-danger" routerLink="[~~className~~]" >Annuler</a>
+      <button class="btn btn-danger" (click)="cancel()">Annuler</button>
     </div>
   </div>`,
   directives: [RouterOutlet],
@@ -93,6 +93,10 @@ export class ~~className~~EditComponent {
   }
   ngOnInit() {
     // Properties are resolved
+  }
+
+  cancel(){
+  this._router.navigate(['~~className~~']);
   }
 
   save() {
