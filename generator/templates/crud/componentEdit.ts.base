@@ -40,6 +40,8 @@ export class ~~className~~EditComponent {
   public hiddenFields = [];
   public id:string;
 
+  private subscriptions = [] ;
+
   /*
   //decommenter ceci pour fixer la structure (et commenter la déclaration de structure au dessus)  public structure = [
       { id: "id", label: "ID"},
@@ -48,16 +50,20 @@ export class ~~className~~EditComponent {
 
   constructor(private _~~modelName~~Service : ~~modelName~~Service,
               private _notifService : NotificationService,
-              private _router: Router, private _routerParams: RouteParams){
+              private _router: Router, private _routerParams: RouteParams){}
 
-              let hidden = "~~hiddenFields~~";
-              this.hiddenFields = hidden.split(',');
+  ngOnInit(){
+
+
+  let hidden = "~~hiddenFields~~";
+  this.hiddenFields = hidden.split(',');
 
     this.id = this._routerParams.get('id');
 
     if(this.id != null) {
       this.action = "Edition";
-      this._~~modelName~~Service.getById(this.id).subscribe( resp => this.instance_~~modelName~~ = resp );
+      let sub = this._~~modelName~~Service.getById(this.id).subscribe( resp => this.instance_~~modelName~~ = resp );
+      this.subscriptions.push(sub);
     }
     else {
       this.action = "Création";
@@ -91,9 +97,6 @@ export class ~~className~~EditComponent {
     }
 
   }
-  ngOnInit() {
-    // Properties are resolved
-  }
 
   private capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
@@ -104,8 +107,8 @@ export class ~~className~~EditComponent {
   }
 
   save() {
-  if (this.id)
-      this._~~modelName~~Service.put(this.id, this.instance_~~modelName~~).subscribe(result => {
+  if (this.id){
+      let sub = this._~~modelName~~Service.put(this.id, this.instance_~~modelName~~).subscribe(result => {
           if (result) {
               this._router.navigate(['~~className~~']);
           }
@@ -113,8 +116,10 @@ export class ~~className~~EditComponent {
               this._notifService.error("Une erreur est survenue lors de l'enregistrement.");
           }
       });
-  else
-   this._~~modelName~~Service.post(this.instance_~~modelName~~).subscribe((result) => {
+      this.subscriptions.push(sub);
+    }
+  else{
+   let sub = this._~~modelName~~Service.post(this.instance_~~modelName~~).subscribe((result) => {
       if(result){
         this._router.navigate(['~~className~~']);
       }
@@ -122,6 +127,14 @@ export class ~~className~~EditComponent {
         this._notifService.error("Une erreur est survenue lors de l'enregistrement.");
       }
     });
+    this.subscriptions.push(sub);
+  }
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach((sub)=>{
+      sub.unsubscribe();
+    })
   }
 
 }
