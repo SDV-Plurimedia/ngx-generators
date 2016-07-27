@@ -23,8 +23,7 @@ export class ~~className~~Component {
   public structure = null;
   public hiddenFields = [];
   /*
-  //decommenter ceci pour fixer la structure
-  public structure = [
+  //decommenter ceci pour fixer la structure (et commenter la déclaration de structure au dessus)  public structure = [
       { id: "id", label: "ID"},
       { id: "name", label: "Nom du ~~model~~"}
   ];*/
@@ -73,11 +72,15 @@ export class ~~className~~Component {
         if (key != '_id' && !skip)
         {
           this.structure.push({
-            id: key, label: key.toUpperCase()
+            id: key, label: this.capitalizeFirstLetter(key)
             });
             }
       });
     }
+  }
+
+  private capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   add() {

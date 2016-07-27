@@ -1,10 +1,8 @@
-import {Injectable, Output, EventEmitter} from "@angular/core";
-import {ReplaySubject} from 'rxjs';
-import {Observable} from 'rxjs/Observable';
-import {Request, Response, Http} from '@angular/http';
+import {Injectable} from "@angular/core";
+import {ReplaySubject} from 'rxjs/Rx';
+
 import {~~modelName~~} from '../../models/~~model~~';
 import {HttpL5Service} from '../http/http_l5'
-declare var GLOBAL_CONFIG;
 
 @Injectable()
 export class ~~modelName~~Service {

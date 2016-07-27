@@ -2,7 +2,7 @@ var fs = require('fs');
 
 module.exports = {
     camelize: function(str) {
-        return str.replace(/(?:^|[-]|[_])(\w)/g, function(a, c) {
+        return str.replace(/(?:^|[-])(\w)/g, function(a, c) {
             return c ? c.toUpperCase() : '';
         });
     },

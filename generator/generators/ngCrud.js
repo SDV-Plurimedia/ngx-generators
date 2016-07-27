@@ -83,18 +83,11 @@ module.exports = {
                                 var filename = url.replace(/\//g, '-');
                                 console.log(`N'oubliez pas de rajouter dans app.ts, la route de modification suivante:
 
-                  {
-                    path: '` + url + `/edit/:id',
-                    name: '` + className + `EditId',
-                    component: ComponentProxyFactory({
-                      path: './dist/components/` + url + `/edit/` + filename + `-edit',
-                      provide: m => m.` + className + `Component
-                    })
-                  },
+                  { path: '` + url + `/edit/:id', component:` + className + `EditComponent, name: '` + className + `EditId' },
 
                    `);
                             } else {
-                                console.log('Ok, Pas de modification de route...')
+                                console.log('Ok, Pas de modification de route... :(')
                             }
                         });
                     });
@@ -104,7 +97,7 @@ module.exports = {
 
         var url = helpers.askDataSync('Quelle URL voulez-vous pour votre page de CRUD? (exemple: crud/users) ');
         var model = helpers.askDataSync('Sur quel modèle se base cette page? (exemple: user) ');
-        var api = helpers.askDataSync('A quelle API voulez-vous vous connecter ( exemple: GLOBAL_CONFIG.api_url+"/user" )? ');
+        var api = helpers.askDataSync('A quelle API Laravel voulez-vous vous connecter ( exemple: Route::post("api-site", ...) => "api-site" )? ');
         var hiddenFields = helpers.askDataSync('Quels champs du modèle souhaitez-vous cacher ? (exemple : "complement,created_at") ');
 
         helpers.printSeparator();

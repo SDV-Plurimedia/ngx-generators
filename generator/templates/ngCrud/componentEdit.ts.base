@@ -30,7 +30,7 @@ import {NotificationService}          from '~~hierarchy~~../../../services/notif
     </div>
   </div>`,
   directives: [RouterOutlet],
-  providers: [~~modelName~~Service, NotificationService]
+  providers: [~~modelName~~Service]
 })
 
 export class ~~className~~EditComponent {
@@ -39,9 +39,9 @@ export class ~~className~~EditComponent {
   public structure: any[] = null;
   public hiddenFields = [];
   public id:string;
+
   /*
-  //decommenter ceci pour fixer la structure
-  public structure = [
+  //decommenter ceci pour fixer la structure (et commenter la déclaration de structure au dessus)  public structure = [
       { id: "id", label: "ID"},
       { id: "name", label: "Nom du ~~model~~"}
   ];*/
@@ -50,7 +50,7 @@ export class ~~className~~EditComponent {
               private _notifService : NotificationService,
               private _router: Router, private _routerParams: RouteParams){
 
-              let hidden = "abool";
+              let hidden = "~~hiddenFields~~";
               this.hiddenFields = hidden.split(',');
 
     this.id = this._routerParams.get('id');
@@ -84,7 +84,7 @@ export class ~~className~~EditComponent {
         console.log(key+" => "+typeof inst[key]);
         if (key != '_id' && !skip) {
           this.structure.push({
-            id: key, label: key.toUpperCase(), type: (typeof inst[key])
+            id: key, label: this.capitalizeFirstLetter(key), type: (typeof inst[key])
           });
           }
       });
@@ -95,15 +95,19 @@ export class ~~className~~EditComponent {
     // Properties are resolved
   }
 
+  private capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   cancel(){
   this._router.navigate(['~~className~~']);
   }
 
   save() {
   if (this.id)
-      this._~~modelName~~Service.put(this.id, this.instance_Test).subscribe(result => {
+      this._~~modelName~~Service.put(this.id, this.instance_~~modelName~~).subscribe(result => {
           if (result) {
-              this._router.navigate(['GestionTest']);
+              this._router.navigate(['~~className~~']);
           }
           else {
               this._notifService.error("Une erreur est survenue lors de l'enregistrement.");
