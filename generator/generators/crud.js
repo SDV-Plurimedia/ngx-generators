@@ -39,13 +39,13 @@ module.exports = {
             var asq = require("async");
             asq.parallel([
                     (cb) => {
-                        helpers.getFileAndReplaceOccurences("bin/generator/templates/ngCrud/component.ts.base", conf, cb);
+                        helpers.getFileAndReplaceOccurences("bin/generator/templates/crud/component.ts.base", conf, cb);
                     },
                     (cb) => {
-                        helpers.getFileAndReplaceOccurences("bin/generator/templates/ngCrud/componentEdit.ts.base", conf, cb);
+                        helpers.getFileAndReplaceOccurences("bin/generator/templates/crud/componentEdit.ts.base", conf, cb);
                     },
                     (cb) => {
-                        helpers.getFileAndReplaceOccurences("bin/generator/templates/ngCrud/service.ts.base", conf, cb);
+                        helpers.getFileAndReplaceOccurences("bin/generator/templates/crud/service.ts.base", conf, cb);
                     }
                 ],
                 function(err, results) {
