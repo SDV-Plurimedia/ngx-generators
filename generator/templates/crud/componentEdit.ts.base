@@ -1,4 +1,5 @@
 import {Router, RouterOutlet, RouteParams}  from '@angular/router-deprecated';
+import {BreadcrumbService} from "~~hierarchy~~../../../services/breadcrumb";
 import {Component, Host} from '@angular/core';
 
 import {~~modelName~~}               from '~~hierarchy~~../../../models/~~model~~';
@@ -50,10 +51,23 @@ export class ~~className~~EditComponent {
 
   constructor(private _~~modelName~~Service : ~~modelName~~Service,
               private _notifService : NotificationService,
-              private _router: Router, private _routerParams: RouteParams){}
+              private _router: Router,
+              private _routerParams: RouteParams,
+              private _bread_serv: BreadcrumbService){
+
+              this._bread_serv.setBreadcrumb([
+                {
+                  "title": "Administration"
+                },
+                {
+                  "title": "Edition des ~~modelName~~s",
+                  "class": "active"
+                }
+                ]);
+
+              }
 
   ngOnInit(){
-
 
   let hidden = "~~hiddenFields~~";
   this.hiddenFields = hidden.split(',');
@@ -134,7 +148,8 @@ export class ~~className~~EditComponent {
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{
       sub.unsubscribe();
-    })
+    });
+    this._bread_serv.clean();
   }
 
 }

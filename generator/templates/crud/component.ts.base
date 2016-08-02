@@ -43,7 +43,20 @@ export class ~~className~~Component {
   ];
   public scope = this;
 
-  constructor(private _~~modelName~~Service: ~~modelName~~Service, private _bootbox : BootboxService, private _router: Router){}
+  constructor(private _~~modelName~~Service: ~~modelName~~Service,
+  private _bootbox : BootboxService,
+  private _router: Router,
+  private _bread_serv: BreadcrumbService){
+    this._bread_serv.setBreadcrumb([
+      {
+        "title": "Administration"
+      },
+      {
+        "title": "Liste des ~~modelName~~s",
+        "class": "active"
+      }
+      ]);
+  }
 
   ngOnInit() {
     let hidden = "~~hiddenFields~~";
@@ -112,7 +125,8 @@ export class ~~className~~Component {
   ngOnDestroy(){
     this.subscriptions.forEach((sub)=>{
       sub.unsubscribe();
-    })
+    });
+    this._bread_serv.clean();
   }
 
 }
