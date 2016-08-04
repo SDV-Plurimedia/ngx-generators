@@ -2,35 +2,38 @@ import {Router, RouterOutlet, RouteParams}  from '@angular/router-deprecated';
 import {BreadcrumbService} from "~~hierarchy~~../../../services/breadcrumb";
 import {Component, Host} from '@angular/core';
 
-import {~~modelName~~}               from '~~hierarchy~~../../../models/~~model~~';
-import {~~modelName~~Service}        from '~~hierarchy~~../../../services/data/~~model~~';
+import {~~modelName~~}                from '~~hierarchy~~../../../models/~~model~~';
+import {~~modelName~~Service}         from '~~hierarchy~~../../../services/data/~~model~~';
 import {NotificationService}          from '~~hierarchy~~../../../services/notification';
+import {LoaderComponent}              from '~~hierarchy~~../../../_widgets/loader/loader';
+
 
 @Component({
   selector: '~~filename~~-edit',
   template: `<h2>{{action}} de ~~model~~</h2>
-  <div class="row" *ngIf="instance_~~modelName~~">
-
-    <div class="col-lg-8" *ngFor="let champ of structure" >
-      <div class="form-group">
-        <label [attr.for]="champ.id">{{champ.label}}</label>
-        <template [ngIf]="champ.type=='string'">
-          <input type="text" [(ngModel)]="instance_~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
-        </template>
-        <template [ngIf]="champ.type=='number'">
-          <input type="number" [(ngModel)]="instance_~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
-        </template>
+  <loader [condition]="instance_~~modelName~~">
+    <div class="row" *ngIf="instance_~~modelName~~">
+      <div class="col-lg-8" *ngFor="let champ of structure" >
+        <div class="form-group">
+          <label [attr.for]="champ.id">{{champ.label}}</label>
+          <template [ngIf]="champ.type=='string'">
+            <input type="text" [(ngModel)]="instance_~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
+          </template>
+          <template [ngIf]="champ.type=='number'">
+            <input type="number" [(ngModel)]="instance_~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
+          </template>
+        </div>
       </div>
     </div>
+  </loader>
 
-  </div>
   <div class="row">
     <div class="form-group pull-right">
       <button class="btn btn-success" (click)="save()">Enregistrer</button>
       <button class="btn btn-danger" (click)="cancel()">Annuler</button>
     </div>
   </div>`,
-  directives: [RouterOutlet],
+  directives: [RouterOutlet, LoaderComponent],
   providers: [~~modelName~~Service]
 })
 

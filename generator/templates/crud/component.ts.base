@@ -13,8 +13,10 @@ import {~~modelName~~Service}        from '~~hierarchy~~../../services/data/~~mo
   selector: '~~filename~~',
   template: `
   <h2>Gestion des ~~model~~s <button class="pull-right btn btn-info" (click)="add()"><i class="glyphicon glyphicon-plus"></i> Ajouter</button></h2>
-  <datatable [data]="~~modelName~~_tab" [structure]="structure" [buttons]="buttons" [parent_scope]="scope"></datatable>`,
-  directives: [DatatableComponent],
+  <loader [condition]="~~modelName~~_tab">
+  <datatable [data]="~~modelName~~_tab" [structure]="structure" [buttons]="buttons" [parent_scope]="scope"></datatable>
+  </loader>`,
+  directives: [DatatableComponent, LoaderComponent],
   providers: [~~modelName~~Service, BootboxService]
 })
 
