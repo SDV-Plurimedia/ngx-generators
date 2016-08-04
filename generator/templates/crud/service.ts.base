@@ -15,11 +15,12 @@ export class ~~modelName~~Service {
     public get() {
         let sub = new ReplaySubject<any>(1);
 
-
         this._httpL5Service.getCached(this.baseUrl).subscribe(res => {
-            sub.next(res);
-            // sub.next(res.map((Test) => { return new Test(Test); }));
-        });
+            let list = res.map((data) => {
+                return new ~~modelName~~(data);
+            });
+            sub.next(list);
+        }, err => sub.error(err));
         return sub;
     }
 
@@ -28,8 +29,8 @@ export class ~~modelName~~Service {
         let url = this.baseUrl + '/' + id;
 
         this._httpL5Service.getCached(url).subscribe(res => {
-            sub.next(res);
-        });
+            sub.next(new ~~modelName~~(res));
+        }, err => sub.error(err));
         return sub;
     }
 
@@ -37,8 +38,8 @@ export class ~~modelName~~Service {
         let sub = new ReplaySubject<any>(1);
 
         this._httpL5Service.formCached(this.baseUrl, body).subscribe(res => {
-            sub.next(res);
-        });
+            sub.next(new ~~modelName~~(res));
+        }, err => sub.error(err));
         return sub;
     }
 
@@ -47,8 +48,8 @@ export class ~~modelName~~Service {
         let url = this.baseUrl + '/' + id;
 
         this._httpL5Service.put(url, body).subscribe(res => {
-            sub.next(res);
-        });
+            sub.next(new ~~modelName~~(res));
+        }, err => sub.error(err));
         return sub;
     }
 
@@ -57,8 +58,8 @@ export class ~~modelName~~Service {
         let url = this.baseUrl + '/' + id_to_delete;
 
         this._httpL5Service.delete(url).subscribe(res => {
-            sub.next(res);
-        });
+            sub.next(new ~~modelName~~(res));
+        }, err => sub.error(err));
         return sub;
     }
 }
