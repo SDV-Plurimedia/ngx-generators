@@ -11,7 +11,7 @@ var includes_front = [
   "node_modules/bootstrap/dist/js/bootstrap.min.js",
   "node_modules/bootbox/bootbox.min.js",
   "node_modules/moment/min/moment-with-locales.js",
-  //new
+  //"node_modules/ckeditor/ckeditor.js", //tous ledossier doit etre copié à la mano
   "node_modules/zone.js/dist/zone.min.js",
   "node_modules/bootstrap-notify/bootstrap-notify.min.js",
   "node_modules/bootbox/bootbox.min.js",

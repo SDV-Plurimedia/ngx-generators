@@ -1,4 +1,4 @@
-var fs = require('fs');
+var fs = require('fs.extra');
 
 module.exports = {
     camelize: function(str) {
@@ -52,6 +52,14 @@ module.exports = {
 
     copyFile(source, destination) {
         fs.createReadStream(source).pipe(fs.createWriteStream(destination));
+    },
+
+    copyRecursive(source,destination){
+      fs.copyRecursive('./foo', './bar', function (err) {
+          if (err) {
+            throw err;
+          }
+        });
     },
 
     //remplace debut(.*)fin par donnee dans input
