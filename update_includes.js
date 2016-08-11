@@ -8,9 +8,23 @@ var includes_front = [
   "node_modules/bootstrap/dist/css/bootstrap.css.map",
   "node_modules/jquery/dist/jquery.min.js",
   "node_modules/tether/dist/js/tether.min.js",
-  "node_modules/bootstrap/dist/js/bootstrap.js",
-  "node_modules/bootbox/bootbox.js",
-  "node_modules/moment/min/moment-with-locales.js"
+  "node_modules/bootstrap/dist/js/bootstrap.min.js",
+  "node_modules/bootbox/bootbox.min.js",
+  "node_modules/moment/min/moment-with-locales.js",
+  //new
+  "node_modules/zone.js/dist/zone.min.js",
+  "node_modules/bootstrap-notify/bootstrap-notify.min.js",
+  "node_modules/bootbox/bootbox.min.js",
+  "node_modules/raphael/raphael.min.js",
+  "node_modules/morris.js/morris.css",
+  "node_modules/morris.js/morris.min.js",
+  "node_modules/jquery-knob/dist/jquery.knob.min.js",
+  "node_modules/datatables.net/js/jquery.dataTables.js",
+  "node_modules/datatables.net-bs/js/dataTables.bootstrap.js",
+  "node_modules/datatables.net-bs/css/dataTables.bootstrap.css",
+  "node_modules/bootstrap-switch/dist/js/bootstrap-switch.min.js",
+  "node_modules/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css"
+
 ];
 
 helpers.printSeparator();
