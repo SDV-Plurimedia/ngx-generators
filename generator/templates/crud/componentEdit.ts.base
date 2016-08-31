@@ -79,7 +79,10 @@ export class ~~className~~EditComponent {
 
     if(this.id != null) {
       this.action = "Edition";
-      let sub = this._~~modelName~~Service.getById(this.id).subscribe( resp => this.instance_~~modelName~~ = resp );
+      let sub = this._~~modelName~~Service.getById(this.id).subscribe(
+        resp => this.instance_~~modelName~~ = resp,
+        err => this._notifService.error("Une erreur s'est produite")
+      );
       this.subscriptions.push(sub);
     }
     else {
@@ -125,25 +128,31 @@ export class ~~className~~EditComponent {
 
   save() {
   if (this.id){
-      let sub = this._~~modelName~~Service.put(this.id, this.instance_~~modelName~~).subscribe(result => {
+      let sub = this._~~modelName~~Service.put(this.id, this.instance_~~modelName~~).subscribe(
+        result => {
           if (result) {
               this._router.navigate(['~~className~~']);
           }
           else {
               this._notifService.error("Une erreur est survenue lors de l'enregistrement.");
           }
-      });
+        },
+        err => this._notifService.error("Une erreur est survenue lors de l'enregistrement.")
+      );
       this.subscriptions.push(sub);
     }
   else{
-   let sub = this._~~modelName~~Service.post(this.instance_~~modelName~~).subscribe((result) => {
-      if(result){
-        this._router.navigate(['~~className~~']);
-      }
-      else {
-        this._notifService.error("Une erreur est survenue lors de l'enregistrement.");
-      }
-    });
+    let sub = this._~~modelName~~Service.post(this.instance_~~modelName~~).subscribe(
+      result => {
+        if(result){
+          this._router.navigate(['~~className~~']);
+        }
+        else {
+          this._notifService.error("Une erreur est survenue lors de l'enregistrement.");
+        }
+      },
+      err => this._notifService.error("Une erreur est survenue lors de l'enregistrement.")
+    );
     this.subscriptions.push(sub);
   }
   }

@@ -48,7 +48,8 @@ export class ~~className~~Component {
   constructor(private _~~modelName~~Service: ~~modelName~~Service,
   private _bootbox : BootboxService,
   private _router: Router,
-  private _bread_serv: BreadcrumbService){
+  private _bread_serv: BreadcrumbService,
+  private _notifService: NotificationService){
     this._bread_serv.setBreadcrumb([
       {
         "title": "Administration"
@@ -64,10 +65,13 @@ export class ~~className~~Component {
     let hidden = "~~hiddenFields~~";
     this.hiddenFields = hidden.split(',');
 
-    let sub = this._~~modelName~~Service.get().subscribe(response => {
-    if (response != null)
-    this.~~modelName~~_tab = response
-    });
+    let sub = this._~~modelName~~Service.get().subscribe(
+      response => {
+        if (response != null)
+          this.~~modelName~~_tab = response
+      },
+      err => this._notifService.error("Une erreur est survenue lors de la récupération des éléments.");
+    );
     this.subscriptions.push(sub);
 
     this._bootbox.setScope(this);
@@ -115,10 +119,13 @@ export class ~~className~~Component {
     let id_to_delete = data._id;
     this._bootbox.confirm('Etes-vous sûr de vouloir supprimer le ~~model~~ '+id_to_delete+' ?', (result: Boolean)=>{
       if(result) {
-        let sub = this._~~modelName~~Service.deleteById(id_to_delete).subscribe((result) => {
-          let index = this.~~modelName~~_tab.indexOf(data);
-          this.~~modelName~~_tab.splice(index, 1);
-        });
+        let sub = this._~~modelName~~Service.deleteById(id_to_delete).subscribe(
+          result => {
+            let index = this.~~modelName~~_tab.indexOf(data);
+            this.~~modelName~~_tab.splice(index, 1);
+          },
+          err => this._notifService.error("Une erreur est survenue lors de la suppression.");
+        );
         this.subscriptions.push(sub);
       }
     });
