@@ -6,6 +6,16 @@ var includes_front = [
   "node_modules/tether/dist/css/tether.min.css",
   "node_modules/bootstrap/dist/css/bootstrap.css",
   "node_modules/bootstrap/dist/css/bootstrap.css.map",
+  "node_modules/bootstrap/dist/css/bootstrap-theme.css",
+	"node_modules/bootstrap/dist/css/bootstrap-theme.css.map",
+	"node_modules/bootstrap/dist/css/bootstrap-theme.min.css",
+	"node_modules/bootstrap/dist/css/bootstrap-theme.min.css.map",
+	"node_modules/bootstrap/dist/css/bootstrap.min.css",
+	"node_modules/bootstrap/dist/css/bootstrap.min.css.map",
+	//"node_modules/bootstrap/dist/fonts/",//tous ledossier doit etre copié à la mano
+	"node_modules/bootstrap/dist/js/bootstrap.js",
+	"node_modules/bootstrap/dist/js/npm.js",
+
   "node_modules/jquery/dist/jquery.min.js",
   "node_modules/tether/dist/js/tether.min.js",
   "node_modules/bootstrap/dist/js/bootstrap.min.js",
