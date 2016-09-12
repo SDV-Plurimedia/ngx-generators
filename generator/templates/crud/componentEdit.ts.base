@@ -128,7 +128,7 @@ export class ~~className~~EditComponent {
 
   save() {
   if (this.id){
-      let sub = this._~~modelName~~Service.put(this.id, this.instance_~~modelName~~).subscribe(
+      let sub = this._~~modelName~~Service.update(this.id, this.instance_~~modelName~~).subscribe(
         result => {
           if (result) {
               this._router.navigate(['~~className~~']);
@@ -142,7 +142,7 @@ export class ~~className~~EditComponent {
       this.subscriptions.push(sub);
     }
   else{
-    let sub = this._~~modelName~~Service.post(this.instance_~~modelName~~).subscribe(
+    let sub = this._~~modelName~~Service.create(this.instance_~~modelName~~).subscribe(
       result => {
         if(result){
           this._router.navigate(['~~className~~']);

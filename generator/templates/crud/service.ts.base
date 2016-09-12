@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {ReplaySubject} from 'rxjs/Rx';
+import {Observable} from 'rxjs/Rx';
 
 import {~~modelName~~} from '../../models/~~model~~';
 import {HttpL5Service} from '../http/http_l5'
@@ -13,53 +13,42 @@ export class ~~modelName~~Service {
     }
 
     public get() {
-        let sub = new ReplaySubject<any>(1);
-
-        this._httpL5Service.getCached(this.baseUrl).subscribe(res => {
-            let list = res.map((data) => {
-                return new ~~modelName~~(data);
-            });
-            sub.next(list);
-        }, err => sub.error(err));
-        return sub;
+        return this._httpL5Service.get(this.baseUrl).map(
+          res => {
+            return res.map((data) => {
+              return new ~~modelName~~(data);
+            }
+          }
+        ));
     }
 
     public getById(id) {
-        let sub = new ReplaySubject<any>(1);
         let url = this.baseUrl + '/' + id;
 
-        this._httpL5Service.getCached(url).subscribe(res => {
-            sub.next(new ~~modelName~~(res));
-        }, err => sub.error(err));
-        return sub;
+        return this._httpL5Service.getCached(url).map(res => {
+            return new ~~modelName~~(res);
+        });
     }
 
-    public post(body: any) {
-        let sub = new ReplaySubject<any>(1);
-
-        this._httpL5Service.formCached(this.baseUrl, body).subscribe(res => {
-            sub.next(new ~~modelName~~(res));
-        }, err => sub.error(err));
-        return sub;
+    public create(body: any) {
+        return this._httpL5Service.post(this.baseUrl, body).map(res => {
+            return new ~~modelName~~(res);
+        });
     }
 
-    public put(id, body: any) {
-        let sub = new ReplaySubject<any>(1);
+    public update(id, body: any) {
         let url = this.baseUrl + '/' + id;
 
-        this._httpL5Service.put(url, body).subscribe(res => {
-            sub.next(new ~~modelName~~(res));
-        }, err => sub.error(err));
-        return sub;
+        return this._httpL5Service.put(url, body).subscribe(res => {
+            return new ~~modelName~~(res);
+        });
     }
 
     public deleteById(id_to_delete) {
-        let sub = new ReplaySubject<any>(1);
         let url = this.baseUrl + '/' + id_to_delete;
 
-        this._httpL5Service.delete(url).subscribe(res => {
-            sub.next(new ~~modelName~~(res));
-        }, err => sub.error(err));
-        return sub;
+        return this._httpL5Service.delete(url).map(res => {
+            return new ~~modelName~~(res);
+        });
     }
 }
