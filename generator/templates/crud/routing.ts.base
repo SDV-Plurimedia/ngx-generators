@@ -1,0 +1,31 @@
+import { Routes, RouterModule } from '@angular/router';
+import { AuthGuardService } from "~~hierarchy~~../../_core/_services/auth-guard";
+import { ~~className~~Component } from "./~~filename~~.component";
+import { ~~className~~EditComponent } from "./edit/edit";
+import { ~~className~~IndexComponent } from "./index/index";
+
+export const ~~routeName~~Routes: Routes = [
+  {
+    path: '~~url~~',
+    component: ~~className~~Component,
+    canActivate: [AuthGuardService],
+    children: [
+      {
+        path: '',
+        component: ~~className~~IndexComponent,
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'edit',
+        component: ~~className~~EditComponent,
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'edit/:id',
+        component: ~~className~~EditComponent,
+        canActivate: [AuthGuardService]
+      }
+    ]
+
+  }
+];

@@ -1,0 +1,54 @@
+import {Injectable} from "@angular/core";
+import {Observable} from 'rxjs/Rx';
+
+import {~~modelName~~} from '~~hierarchy~~../../../../../~~modelPath~~';
+import {HttpL5Service} from '~~hierarchy~~../../../_core/_services/http/http-l5';
+
+declare var GLOBAL_CONFIG;
+
+@Injectable()
+export class ~~modelName~~Service {
+
+    private baseUrl = "/~~api_endpoint~~";
+
+    public constructor(private _httpL5Service: HttpL5Service) {
+    }
+
+    public get() {
+        return this._httpL5Service.get(this.baseUrl).map(
+          res => {
+            return res.map((data) => {
+              return new ~~modelName~~(data);
+            });
+          }
+        );
+    }
+
+    public getById(id) {
+        let url = this.baseUrl + '/' + id;
+
+        return this._httpL5Service.getCached(url).map(res => {
+            return new ~~modelName~~(res);
+        });
+    }
+
+    public create(body: any) {
+        return this._httpL5Service.post(this.baseUrl, body).map(res => {
+            return new ~~modelName~~(res);
+        });
+    }
+
+    public update(id, body: any) {
+        let url = this.baseUrl + '/' + id;
+
+        return this._httpL5Service.put(url, body).subscribe(res => {
+            return new ~~modelName~~(res);
+        });
+    }
+
+    public deleteById(id_to_delete) {
+        let url = this.baseUrl + '/' + id_to_delete;
+
+        return this._httpL5Service.delete(url);
+    }
+}

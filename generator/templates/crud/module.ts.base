@@ -1,0 +1,65 @@
+/*
+
+Le module ~~modelName~~
+
+*/
+
+import { NgModule } from '@angular/core';
+import { SharedModule } from '~~hierarchy~~../../_shared/shared.module';
+
+//les pages
+import { ~~className~~Component } from "./~~filename~~.component";
+import { ~~className~~IndexComponent } from "./index/index";
+import { ~~className~~EditComponent } from "./edit/edit";
+
+var pages =  [
+  ~~className~~Component,
+  ~~className~~IndexComponent,
+  ~~className~~EditComponent
+];
+
+//les widgets
+//import { AutocompleteComponent } from "./_widgets/autocomplete/autocomplete";
+
+var widgets =  [
+  //AutocompleteComponent,
+];
+
+//les directives
+//import { CollapseDirective } from "./_directives/collapse";
+var directives = [
+  //DNDDirective,
+];
+
+//les pipes
+//import { StringShortenedPipe } from "./_pipes/string-shortened";
+
+var pipes = [
+  //StringShortenedPipe,
+];
+
+//les services
+import { ~~modelName~~Service } from "./_services/~~model~~";
+
+
+@NgModule({
+  imports: [
+    SharedModule
+  ],
+  declarations: [
+    ...widgets,
+    ...pipes,
+    ...directives,
+    ...pages
+  ],
+  exports: [
+    ...widgets,
+    ...pipes,
+    ...directives
+  ],
+  providers: [
+    ~~modelName~~Service
+  ]
+})
+export class ~~className~~Module {
+ }

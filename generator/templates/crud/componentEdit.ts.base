@@ -1,0 +1,167 @@
+import {Router, ActivatedRoute}  from '@angular/router';
+import {BreadcrumbService} from "~~hierarchy~~../../../_core/_services/breadcrumb";
+import {Component, Host} from '@angular/core';
+
+import {~~modelName~~}                from '~~hierarchy~~../../../../../~~modelPath~~';
+import {~~modelName~~Service}         from '../_services/~~model~~';
+import {NotificationService}          from '~~hierarchy~~../../../_core/_services/notification';
+import {LoaderComponent}              from '~~hierarchy~~../../../_shared/_widgets/loader/loader';
+
+
+@Component({
+  selector: '~~filename~~-edit',
+  template: `<h2>{{action}} de ~~model~~</h2>
+  <loader [condition]="instance_~~modelName~~">
+    <div class="row" *ngIf="instance_~~modelName~~">
+      <div class="col-lg-8" *ngFor="let champ of structure" >
+        <div class="form-group">
+          <label [attr.for]="champ.id">{{champ.label}}</label>
+          <template [ngIf]="champ.type=='string'">
+            <input type="text" [(ngModel)]="instance_~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
+          </template>
+          <template [ngIf]="champ.type=='number'">
+            <input type="number" [(ngModel)]="instance_~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
+          </template>
+        </div>
+      </div>
+    </div>
+  </loader>
+
+  <div class="row">
+    <div class="form-group pull-right">
+      <button class="btn btn-success" (click)="save()">Enregistrer</button>
+      <button class="btn btn-danger" (click)="cancel()">Annuler</button>
+    </div>
+  </div>`
+})
+
+export class ~~className~~EditComponent {
+  public instance_~~modelName~~: ~~modelName~~;
+  public action : string;
+  public structure: any[] = null;
+  public hiddenFields = [];
+  public id:string;
+
+  private subscriptions = [] ;
+
+  /*
+  //decommenter ceci pour fixer la structure (et commenter la déclaration de structure au dessus)  public structure = [
+      { id: "id", label: "ID"},
+      { id: "name", label: "Nom du ~~model~~"}
+  ];*/
+
+  constructor(
+    private _~~modelName~~Service : ~~modelName~~Service,
+    private _notifService : NotificationService,
+    private _router: Router,
+    private _route: ActivatedRoute,
+    private _bread_serv: BreadcrumbService
+  ){
+
+    this._bread_serv.setBreadcrumb([
+      {
+        "title": "Administration"
+      },
+      {
+        "title": "Edition des ~~modelName~~s",
+        "class": "active"
+      }
+      ]);
+
+  }
+
+  ngOnInit(){
+
+  let hidden = "~~hiddenFields~~";
+  this.hiddenFields = hidden.split(',');
+
+    this.id = this._route.snapshot.params['id'];
+
+    if(this.id != null) {
+      this.action = "Edition";
+      let sub = this._~~modelName~~Service.getById(this.id).subscribe(
+        resp => this.instance_~~modelName~~ = resp,
+        err => this._notifService.error("Une erreur s'est produite")
+      );
+      this.subscriptions.push(sub);
+    }
+    else {
+      this.action = "Création";
+      this.instance_~~modelName~~ = new ~~modelName~~();
+    }
+
+    //si on ne définie pas 'structure' manuellement, on fais ici une structure dynamique
+    if(this.structure === null){
+      console.log("construction de la structure");
+      this.structure = [];
+      let inst = new ~~modelName~~();
+      let proprietes = Object.keys( inst );
+      if(proprietes.length == 0){
+        console.log("Attention, votre modèle ne contient pas de propriété avec des valeurs par défaut! Donc votre structure de CRUD sera vide...")
+      }
+      proprietes.forEach((key,index)=>{
+      let skip = false;
+        // key: the name of the object key
+        // index: the ordinal position of the key within the object
+        this.hiddenFields.forEach(item => {
+            if (item == key)
+                skip = true;
+        });
+        console.log(key+" => "+typeof inst[key]);
+        if (key != '_id' && !skip) {
+          this.structure.push({
+            id: key, label: this.capitalizeFirstLetter(key), type: (typeof inst[key])
+          });
+          }
+      });
+    }
+
+  }
+
+  private capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  cancel(){
+  this._router.navigate(['~~filename~~']);
+  }
+
+  save() {
+  if (this.id){
+      let sub = this._~~modelName~~Service.update(this.id, this.instance_~~modelName~~).subscribe(
+        result => {
+          if (result) {
+              this._router.navigate(['~~filename~~']);
+          }
+          else {
+              this._notifService.error("Une erreur est survenue lors de l'enregistrement.");
+          }
+        },
+        err => this._notifService.error("Une erreur est survenue lors de l'enregistrement.")
+      );
+      this.subscriptions.push(sub);
+    }
+  else{
+    let sub = this._~~modelName~~Service.create(this.instance_~~modelName~~).subscribe(
+      result => {
+        if(result){
+          this._router.navigate(['~~filename~~']);
+        }
+        else {
+          this._notifService.error("Une erreur est survenue lors de l'enregistrement.");
+        }
+      },
+      err => this._notifService.error("Une erreur est survenue lors de l'enregistrement.")
+    );
+    this.subscriptions.push(sub);
+  }
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach((sub)=>{
+      sub.unsubscribe();
+    });
+    this._bread_serv.clean();
+  }
+
+}
