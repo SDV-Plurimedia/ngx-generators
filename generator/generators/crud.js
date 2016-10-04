@@ -8,7 +8,7 @@ module.exports = {
         var createFiles = function(url, model) {
 
             var api_endpoint = helpers.askDataSync('A quelle Url d\'API Laravel voulez-vous vous connecter ( exemple: "pulse/api-site" )? ');
-            var hiddenFields = helpers.askDataSync('Quels champs du modèle souhaitez-vous cacher ? (avec virgule, exemple : "complement,created_at") ');
+            var hiddenFields = helpers.askDataSync('Quels champs du modèle ne voulez-vous pas afficher dans le formulaire ? (avec virgule, exemple : "complement,created_at") ');
 
             helpers.printSeparator();
 
