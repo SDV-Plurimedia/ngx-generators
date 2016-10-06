@@ -41,7 +41,7 @@ export class ~~modelName~~Service {
     public update(id, body: any) {
         let url = this.baseUrl + '/' + id;
 
-        return this._httpL5Service.put(url, body).subscribe(res => {
+        return this._httpL5Service.put(url, body).map(res => {
             return new ~~modelName~~(res);
         });
     }
