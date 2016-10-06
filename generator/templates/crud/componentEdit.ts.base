@@ -22,6 +22,9 @@ import {LoaderComponent}              from '~~hierarchy~~../../../_shared/_widge
           <template [ngIf]="champ.type=='number'">
             <input type="number" [(ngModel)]="instance_~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
           </template>
+          <template [ngIf]="champ.type=='date'">
+            <datepicker [(ngModel)]="instance_~~modelName~~[champ.id]" name="{{champ.id}}" locale="fr" view-format="Do MMMM YYYY" model-format="YYYY-MM-DD" first-week-day-sunday="false"></datepicker>
+          </template>
         </div>
       </div>
     </div>

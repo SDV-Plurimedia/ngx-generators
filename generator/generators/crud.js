@@ -151,9 +151,10 @@ var modelContent =
 }`
         //boucle d'ajout d'un champ
         var champ = 'y';
+        var contient_date = '';
         while(champ.toLowerCase() == 'y'){
           var nom = helpers.askDataSync('Nom du champ ?  (en minuscule et underscore_, exemple: "titre_alt" ) ');
-          var type = helpers.askDataSync('Type du champ ?  (exemple: "string","number","boolean" ) ');
+          var type = helpers.askDataSync('Type du champ ?  (exemple: "string","number","boolean","date" ) ');
           var defauval = "null";
           if( type == "number"){
             defauval = "0";
@@ -164,6 +165,12 @@ var modelContent =
           else if( type == "boolean"){
             defauval = "false";
           }
+          //WIP -> gestion de date
+          else if( type == "date"){
+            type = "Date";
+            defauval = "new Date(today_str_iso)";
+            contient_date = "var today_str_iso = today.getFullYear() + '-' + ( today.getMonth() + 1) + '-' + today.getDate();";
+          }
 
           var line_champ = "\n public "+nom+": "+type+" = "+defauval+";";
           modelContent = helpers.afterPlaceHolder(modelContent,ph_field,line_champ);
@@ -173,6 +180,11 @@ var modelContent =
 
 
           var champ = helpers.askDataSync('Voulez vous ajouter un autre champ (y / n) ? ');
+        }
+
+        //si parmis tous les champs on a besoin de gerer une date
+        if(contient_date !== ''){
+          modelContent = helpers.afterPlaceHolder(modelContent,ph_const,contient_date);
         }
 
         //quand on a plus de champ a jouter on ecrit le fichier
