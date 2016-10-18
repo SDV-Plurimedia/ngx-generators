@@ -5,7 +5,7 @@ import {Component, Host} from '@angular/core';
 import {~~modelName~~}                from '~~hierarchy~~../../../../../~~modelPath~~';
 import {~~modelName~~Service}         from '../_services/~~model~~';
 import {NotificationService}          from '~~hierarchy~~../../../_core/_services/notification';
-import {LoaderComponent}              from '~~hierarchy~~../../../_shared/_widgets/loader/loader';
+import {LoaderComponent}              from 'ng2-endless-widgets';
 
 
 @Component({

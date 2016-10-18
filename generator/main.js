@@ -1,9 +1,13 @@
 #!/usr/bin/env node
+'use strict';
+
+// Provide a title to the process in `ps`
+process.title = 'ng2-generators';
 
 //Generateur de script ts (à lancer avec node > 5)
 const helpers = require('../helpers');
 const fs = require('fs');
-const installPath = "./bin/generator/generators/";
+const installPath = "./generator/generators/";
 
 //lister les arguments
 /*process.argv.forEach(function (val, index, array) {
