@@ -7,7 +7,7 @@ process.title = 'ng2-generators';
 //Generateur de script ts (à lancer avec node > 5)
 const helpers = require('../helpers');
 const fs = require('fs');
-const installPath = "./generator/generators/";
+const installPath = __dirname+"/generators/";
 
 //lister les arguments
 /*process.argv.forEach(function (val, index, array) {
