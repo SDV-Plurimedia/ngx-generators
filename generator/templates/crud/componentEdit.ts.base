@@ -126,7 +126,8 @@ export class ~~className~~EditComponent {
   }
 
   cancel(){
-  this._router.navigate(['~~filename~~']);
+    this._router.navigate(['~~filename~~']);
+    return false;//pour ne pas bubble up l'event
   }
 
   save() {
