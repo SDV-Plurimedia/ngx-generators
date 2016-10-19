@@ -8,10 +8,13 @@
   "bin": {
     "ng2gen": "./generator/main.js"
   },
-  "private": true,
   "dependencies": {
     "async": "^2.1.2",
     "fs.extra": "^1.3.2",
     "readline-sync": "^1.4.4"
-  }
+  },
+  "bugs": {
+    "url": "https://gitlab.sdv.fr/rnd/ng2-generators/issues"
+  },
+  "author": "R&D @ SDV Plurimédia"
 }
