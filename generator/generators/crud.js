@@ -50,25 +50,25 @@ module.exports = {
             }
 
             var asq = require("async");
-            var generator_templates = "./generator/templates/";
+            var generator_templates = __dirname+"/../templates/crud/";
             asq.parallel([
                     (cb) => {
-                        helpers.getFileAndReplaceOccurences(generator_templates+"crud/componentIndex.ts.base", conf, cb);
+                        helpers.getFileAndReplaceOccurences(generator_templates+"componentIndex.ts.base", conf, cb);
                     },
                     (cb) => {
-                        helpers.getFileAndReplaceOccurences(generator_templates+"crud/componentEdit.ts.base", conf, cb);
+                        helpers.getFileAndReplaceOccurences(generator_templates+"componentEdit.ts.base", conf, cb);
                     },
                     (cb) => {
-                        helpers.getFileAndReplaceOccurences(generator_templates+"crud/service.ts.base", conf, cb);
+                        helpers.getFileAndReplaceOccurences(generator_templates+"service.ts.base", conf, cb);
                     },
                     (cb) => {
-                        helpers.getFileAndReplaceOccurences(generator_templates+"crud/module.ts.base", conf, cb);
+                        helpers.getFileAndReplaceOccurences(generator_templates+"module.ts.base", conf, cb);
                     },
                     (cb) => {
-                        helpers.getFileAndReplaceOccurences(generator_templates+"crud/component.ts.base", conf, cb);
+                        helpers.getFileAndReplaceOccurences(generator_templates+"component.ts.base", conf, cb);
                     },
                     (cb) => {
-                        helpers.getFileAndReplaceOccurences(generator_templates+"crud/routing.ts.base", conf, cb);
+                        helpers.getFileAndReplaceOccurences(generator_templates+"routing.ts.base", conf, cb);
                     }
                 ],
                 function(err, results) {
