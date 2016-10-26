@@ -5,25 +5,25 @@ import {Component, Host} from '@angular/core';
 import {~~modelName~~}                from '~~hierarchy~~../../../../../~~modelPath~~';
 import {~~modelName~~Service}         from '../_services/~~model~~';
 import {NotificationService}          from '~~hierarchy~~../../../_core/_services/notification';
-import {LoaderComponent}              from 'ng2-endless-widgets';
+import {LoaderComponent}              from "ng2-endless-widgets/_widgets/loader/loader";
 
 
 @Component({
   selector: '~~filename~~-edit',
   template: `<h2>{{action}} de ~~model~~</h2>
-  <loader [condition]="instance_~~modelName~~">
-    <div class="row" *ngIf="instance_~~modelName~~">
+  <loader [condition]="data~~modelName~~">
+    <div class="row" *ngIf="data~~modelName~~">
       <div class="col-lg-8" *ngFor="let champ of structure" >
         <div class="form-group">
           <label [attr.for]="champ.id">{{champ.label}}</label>
           <template [ngIf]="champ.type=='string'">
-            <input type="text" [(ngModel)]="instance_~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
+            <input type="text" [(ngModel)]="data~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
           </template>
           <template [ngIf]="champ.type=='number'">
-            <input type="number" [(ngModel)]="instance_~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
+            <input type="number" [(ngModel)]="data~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
           </template>
           <template [ngIf]="champ.type=='date'">
-            <datepicker [(ngModel)]="instance_~~modelName~~[champ.id]" name="{{champ.id}}" locale="fr" view-format="Do MMMM YYYY" model-format="YYYY-MM-DD" first-week-day-sunday="false"></datepicker>
+            <datepicker [(ngModel)]="data~~modelName~~[champ.id]" name="{{champ.id}}" locale="fr" view-format="Do MMMM YYYY" model-format="YYYY-MM-DD" first-week-day-sunday="false"></datepicker>
           </template>
         </div>
       </div>
@@ -39,7 +39,7 @@ import {LoaderComponent}              from 'ng2-endless-widgets';
 })
 
 export class ~~className~~EditComponent {
-  public instance_~~modelName~~: ~~modelName~~;
+  public data~~modelName~~: ~~modelName~~;
   public action : string;
   public structure: any[] = null;
   public hiddenFields = [];
@@ -83,14 +83,14 @@ export class ~~className~~EditComponent {
     if(this.id != null) {
       this.action = "Edition";
       let sub = this._~~modelName~~Service.getById(this.id).subscribe(
-        resp => this.instance_~~modelName~~ = resp,
+        resp => this.data~~modelName~~ = resp,
         err => this._notifService.error("Une erreur s'est produite")
       );
       this.subscriptions.push(sub);
     }
     else {
       this.action = "Création";
-      this.instance_~~modelName~~ = new ~~modelName~~();
+      this.data~~modelName~~ = new ~~modelName~~();
     }
 
     //si on ne définie pas 'structure' manuellement, on fais ici une structure dynamique
@@ -132,7 +132,7 @@ export class ~~className~~EditComponent {
 
   save() {
   if (this.id){
-      let sub = this._~~modelName~~Service.update(this.id, this.instance_~~modelName~~).subscribe(
+      let sub = this._~~modelName~~Service.update(this.id, this.data~~modelName~~).subscribe(
         result => {
           if (result) {
               this._router.navigate(['~~filename~~']);
@@ -146,7 +146,7 @@ export class ~~className~~EditComponent {
       this.subscriptions.push(sub);
     }
   else{
-    let sub = this._~~modelName~~Service.create(this.instance_~~modelName~~).subscribe(
+    let sub = this._~~modelName~~Service.create(this.data~~modelName~~).subscribe(
       result => {
         if(result){
           this._router.navigate(['~~filename~~']);

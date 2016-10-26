@@ -3,7 +3,7 @@ import {Router, RouterOutlet}  from '@angular/router';
 import {BootboxService} from '~~hierarchy~~../../../_core/_services/bootbox';
 import {NotificationService} from '~~hierarchy~~../../../_core/_services/notification';
 import {BreadcrumbService} from "~~hierarchy~~../../../_core/_services/breadcrumb";
-import {LoaderComponent} from '~~hierarchy~~../../../_shared/_widgets/loader/loader'
+import {LoaderComponent} from "ng2-endless-widgets/_widgets/loader/loader";
 
 import {~~modelName~~}               from '~~hierarchy~~../../../../../~~modelPath~~';
 import {~~modelName~~Service}        from '../_services/~~model~~';
