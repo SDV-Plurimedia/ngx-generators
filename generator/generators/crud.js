@@ -144,9 +144,18 @@ var modelContent =
     `+ph_field+`
 
     public constructor(obj?: any) {
-        this._id = obj && obj._id || obj && obj.id || null;
+        this._id = obj && obj._id || null;
 
         `+ph_const+`
+
+        /*//si vous n'utilisez plus le constructeur de form auto, ou si vous avez fixé la structure, vous pouvez remplacer le contenu de INSERT_CONSTRUCT_AUTO par ça:
+        if(typeof obj !== 'undefined'){
+        let properties = Object.keys(this);
+        properties.forEach((prop) => {
+          if (obj[prop] !== undefined && obj[prop] !== null)
+            this[prop] = obj[prop];
+        });
+      }*/
 
     }
 }`
@@ -176,7 +185,7 @@ var modelContent =
           var line_champ = "\n public "+nom+": "+type+" = "+defauval+";";
           modelContent = helpers.afterPlaceHolder(modelContent,ph_field,line_champ);
 
-          var line_const = "\n this."+nom+" = obj && obj."+nom+" || obj && obj."+nom+" || "+defauval+";";
+          var line_const = "\n this."+nom+" = obj && obj."+nom+" || "+defauval+";";
           modelContent = helpers.afterPlaceHolder(modelContent,ph_const,line_const);
 
 
