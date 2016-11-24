@@ -1,7 +1,12 @@
 {
-  "name": "ng2-generators",
-  "version": "0.2.0",
+  "name": "sdv-ng2-generators",
+  "version": "0.3.0",
   "license": "MIT",
+  "description": "Angular2 - SDV Generators",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:SDV-Plurimedia/sdv-ng2-generators.git"
+  },
   "scripts": {
     "gen": "node generator/main"
   },
@@ -14,7 +19,7 @@
     "readline-sync": "^1.4.4"
   },
   "bugs": {
-    "url": "https://gitlab.sdv.fr/rnd/ng2-generators/issues"
+    "url": "https://github.com/SDV-Plurimedia/sdv-ng2-generators/issues"
   },
   "author": "R&D @ SDV Plurimédia"
 }
