@@ -191,7 +191,7 @@ var modelContent =
           else if( type == "date"){
             type = "Date";
             defauval = "new Date(today_str_iso)";
-            contient_date = "var today_str_iso = today.getFullYear() + '-' + ( today.getMonth() + 1) + '-' + today.getDate();";
+            contient_date = "\n var today_str_iso = today.getFullYear() + '-' + ( today.getMonth() + 1) + '-' + today.getDate();";
           }
 
           var line_champ = "\n public "+nom+": "+type+" = "+defauval+";";
