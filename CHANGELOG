@@ -1,5 +1,10 @@
 #Changelog SDV-NG2-Generators
 
+## 0.3.1 - WIP
+
+* Retrait des generateurs dépréciés (directive, page, pipe, service, widget)
+( à la place il faut utiliser les fonctions native de "ng generate" )
+
 ## 0.3.0 - 24/11/2016
 
 * Premiere version publique
