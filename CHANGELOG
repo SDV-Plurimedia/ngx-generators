@@ -1,7 +1,9 @@
 #Changelog SDV-NG2-Generators
 
-## 0.3.1 - WIP
+## 0.4.0 - 20/12/2016
 
+* Compatibilité avec les API REST généré par [InfoYom](http://labs.infyom.com/laravelgenerator/)
+* Compatibilité avec sdv-ng2-widgets
 * Retrait des generateurs dépréciés (directive, page, pipe, service, widget)
 ( à la place il faut utiliser les fonctions native de "ng generate" )
 
