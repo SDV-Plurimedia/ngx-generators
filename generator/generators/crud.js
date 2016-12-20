@@ -8,6 +8,15 @@ module.exports = {
         var createFiles = function(url, model) {
 
             var api_endpoint = helpers.askDataSync('A quelle Url d\'API Laravel voulez-vous vous connecter ( exemple: "pulse/api-site" )? ');
+            
+
+            var api_infyom = helpers.askDataSync('Cette api a elle été générée avec Infyom ? (y /n ) ');
+            if( api_infyom.toLowerCase() === 'y' ) {
+                api_infyom = '.data';
+            } else {
+                api_infyom = ''
+            }
+
             var hiddenFields = helpers.askDataSync('Quels champs du modèle ne voulez-vous pas afficher dans le formulaire ? (avec virgule, exemple : "complement,created_at") ');
 
             helpers.printSeparator();
@@ -20,6 +29,8 @@ module.exports = {
             model = model.toLowerCase().split('/').pop();
 
             api_endpoint = (typeof api_endpoint !== 'undefined' && api_endpoint !== "") ? api_endpoint : "pulse/"+model;
+
+
 
             //on s'assure du format
             url = url.toLowerCase();
@@ -37,6 +48,7 @@ module.exports = {
             var conf = {
                 'url': url,
                 'api_endpoint': api_endpoint,
+                'api_infyom': api_infyom,
                 'absoluteDirname': absoluteDirname,
                 'hiddenFields': hiddenFields,
                 'dirname': dirname,

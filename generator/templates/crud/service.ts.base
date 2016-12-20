@@ -17,7 +17,7 @@ export class ~~modelName~~Service {
     public get() {
         return this._httpL5Service.get(this.baseUrl).map(
           res => {
-            return res.map((data) => {
+            return res~~api_infyom~~.map((data) => {
               return new ~~modelName~~(data);
             });
           }
@@ -28,13 +28,13 @@ export class ~~modelName~~Service {
         let url = this.baseUrl + '/' + id;
 
         return this._httpL5Service.getCached(url).map(res => {
-            return new ~~modelName~~(res);
+            return new ~~modelName~~(res~~api_infyom~~);
         });
     }
 
     public create(body: any) {
         return this._httpL5Service.post(this.baseUrl, body).map(res => {
-            return new ~~modelName~~(res);
+            return new ~~modelName~~(res~~api_infyom~~);
         });
     }
 
@@ -42,7 +42,7 @@ export class ~~modelName~~Service {
         let url = this.baseUrl + '/' + id;
 
         return this._httpL5Service.put(url, body).map(res => {
-            return new ~~modelName~~(res);
+            return new ~~modelName~~(res~~api_infyom~~);
         });
     }
 
