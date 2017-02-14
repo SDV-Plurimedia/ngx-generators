@@ -27,7 +27,7 @@ export class ~~modelName~~Service {
     public getById(id) {
         let url = this.baseUrl + '/' + id;
 
-        return this._httpL5Service.getCached(url).map(res => {
+        return this._httpL5Service.get(url).map(res => {
             return new ~~modelName~~(res~~api_infyom~~);
         });
     }
