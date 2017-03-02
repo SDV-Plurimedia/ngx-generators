@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {Router, RouterOutlet}  from '@angular/router';
 import {BootboxService} from '~~hierarchy~~../../../_core/_services/bootbox';
 import {NotificationService} from '~~hierarchy~~../../../_core/_services/notification';
-import {BreadcrumbService} from "~~hierarchy~~../../../_core/_services/breadcrumb";
-import {LoaderComponent} from "sdv-ng2-widgets/_widgets/loader/loader";
+import {BreadcrumbService} from '~~hierarchy~~../../../_core/_services/breadcrumb';
+import {LoaderComponent} from 'sdv-ng2-widgets/_widgets/loader/loader';
 
 import {~~modelName~~}               from '~~hierarchy~~../../../../../~~modelPath~~';
 import {~~modelName~~Service}        from '../_services/~~model~~';
@@ -11,9 +11,9 @@ import {~~modelName~~Service}        from '../_services/~~model~~';
 @Component({
   selector: '~~filename~~',
   template: `
-  <h2>Gestion des ~~model~~s <button class="pull-right btn btn-info" (click)="add()"><i class="glyphicon glyphicon-plus"></i> Ajouter</button></h2>
-  <loader [condition]="~~modelName~~_tab">
-    <datatable [data]="~~modelName~~_tab" [structure]="structure" [buttons]="buttons" [parent_scope]="scope"></datatable>
+  <h2>Gestion des ~~model~~s <button class='pull-right btn btn-info' (click)='add()'><i class='glyphicon glyphicon-plus'></i> Ajouter</button></h2>
+  <loader [condition]='~~modelName~~_tab'>
+    <datatable [data]='~~modelName~~_tab' [structure]='structure' [buttons]='buttons' [parent_scope]='scope'></datatable>
   </loader>`
 })
 
@@ -25,19 +25,19 @@ export class ~~className~~IndexComponent {
   private subscriptions = [] ;
   /*
   //decommenter ceci pour fixer la structure (et commenter la déclaration de structure au dessus)  public structure = [
-      { id: "id", label: "ID"},
-      { id: "name", label: "Nom du ~~model~~"}
+      { id: 'id', label: 'ID'},
+      { id: 'name', label: 'Nom du ~~model~~'}
   ];*/
   public buttons = [
     {
         text: 'Editer',
         action: this.edit,
-        class: "btn btn-warning"
+        class: 'btn btn-warning'
     },
     {
         text: 'Supprimer',
         action: this.confirmDelete,
-        class: "btn btn-danger"
+        class: 'btn btn-danger'
     }
   ];
   public scope = this;
@@ -51,17 +51,17 @@ export class ~~className~~IndexComponent {
   ){
     this._bread_serv.setBreadcrumb([
       {
-        "title": "Administration"
+        'title': 'Administration'
       },
       {
-        "title": "Liste des ~~modelName~~s",
-        "class": "active"
+        'title': 'Liste des ~~modelName~~s',
+        'class': 'active'
       }
       ]);
   }
 
   ngOnInit() {
-    let hidden = "~~hiddenFields~~";
+    let hidden = '~~hiddenFields~~';
     this.hiddenFields = hidden.split(',');
 
     let sub = this._~~modelName~~Service.get().subscribe(
@@ -71,7 +71,7 @@ export class ~~className~~IndexComponent {
         }
       },
       err => {
-        this._notifService.error("Une erreur est survenue lors de la récupération des éléments.");
+        this._notifService.error('Une erreur est survenue lors de la récupération des éléments.');
       }
     );
     this.subscriptions.push(sub);
@@ -80,12 +80,12 @@ export class ~~className~~IndexComponent {
 
     //si on ne définie pas 'structure' manuellement, on fais ici une structure dynamique
     if(this.structure === null){
-      console.log("construction de la structure");
+      console.log('construction de la structure');
       this.structure = [];
       let inst = new ~~modelName~~();
       let proprietes = Object.keys( inst );
       if(proprietes.length == 0){
-        console.log("Attention, votre modèle ne contient pas de propriété avec des valeurs par défaut! Donc votre structure de CRUD sera vide...")
+        console.log('Attention, votre modèle ne contient pas de propriété avec des valeurs par défaut! Donc votre structure de CRUD sera vide...')
       }
       proprietes.forEach((key,index)=>{
       let skip = false;
@@ -127,7 +127,7 @@ export class ~~className~~IndexComponent {
             this.~~modelName~~_tab.splice(index, 1);
           },
           err => {
-            this._notifService.error("Une erreur est survenue lors de la suppression.");
+            this._notifService.error('Une erreur est survenue lors de la suppression.');
           }
         );
         this.subscriptions.push(sub);

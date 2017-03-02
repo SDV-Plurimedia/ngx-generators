@@ -1,11 +1,11 @@
 import {Router, ActivatedRoute}  from '@angular/router';
-import {BreadcrumbService} from "~~hierarchy~~../../../_core/_services/breadcrumb";
+import {BreadcrumbService} from '~~hierarchy~~../../../_core/_services/breadcrumb';
 import {Component, Host} from '@angular/core';
 
 import {~~modelName~~}                from '~~hierarchy~~../../../../../~~modelPath~~';
 import {~~modelName~~Service}         from '../_services/~~model~~';
 import {NotificationService}          from '~~hierarchy~~../../../_core/_services/notification';
-import {LoaderComponent}              from "sdv-ng2-widgets/_widgets/loader/loader";
+import {LoaderComponent}              from 'sdv-ng2-widgets/_widgets/loader/loader';
 
 
 @Component({

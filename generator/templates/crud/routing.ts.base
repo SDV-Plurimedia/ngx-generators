@@ -1,8 +1,8 @@
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuardService } from "~~hierarchy~~../../_core/_services/auth-guard";
-import { ~~className~~Component } from "./~~filename~~.component";
-import { ~~className~~EditComponent } from "./edit/edit";
-import { ~~className~~IndexComponent } from "./index/index";
+import { AuthGuardService } from '~~hierarchy~~../../_core/_services/auth-guard';
+import { ~~className~~Component } from './~~filename~~.component';
+import { ~~className~~EditComponent } from './edit/edit';
+import { ~~className~~IndexComponent } from './index/index';
 
 export const ~~routeName~~Routes: Routes = [
   {

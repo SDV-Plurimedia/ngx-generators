@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 
 import {~~modelName~~} from '~~hierarchy~~../../../../../~~modelPath~~';
@@ -9,7 +9,7 @@ declare var GLOBAL_CONFIG;
 @Injectable()
 export class ~~modelName~~Service {
 
-    private baseUrl = "/~~api_endpoint~~";
+    private baseUrl = '/~~api_endpoint~~';
 
     public constructor(private _httpL5Service: HttpL5Service) {
     }
