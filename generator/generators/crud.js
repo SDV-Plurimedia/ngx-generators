@@ -8,13 +8,18 @@ module.exports = {
         var createFiles = function(url, model) {
 
             var api_endpoint = helpers.askDataSync('A quelle Url d\'API Laravel voulez-vous vous connecter ( exemple: "pulse/api-site" )? ');
-            
+
 
             var api_infyom = helpers.askDataSync('Cette api a elle été générée avec Infyom ? (y /n ) ');
             if( api_infyom.toLowerCase() === 'y' ) {
                 api_infyom = '.data';
             } else {
                 api_infyom = ''
+            }
+
+            var primaryKey = helpers.askDataSync('Quelle est la clef primaire de votre modele ? [default: _id] ');
+            if( primaryKey.toLowerCase() === '' ) {
+                primaryKey = '_id';
             }
 
             var hiddenFields = helpers.askDataSync('Quels champs du modèle ne voulez-vous pas afficher dans le formulaire ? (avec virgule, exemple : "complement,created_at") ');
@@ -58,6 +63,7 @@ module.exports = {
                 'model': model,
                 'modelPath': modelPath,
                 'modelName': modelName,
+                'primaryKey': primaryKey,
                 'hierarchy': hierarchy
             }
 

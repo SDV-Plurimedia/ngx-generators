@@ -95,7 +95,7 @@ export class ~~className~~IndexComponent {
           if (item == key)
           skip = true;
         });
-        if (key != '_id' && !skip)
+        if (key != '~~primaryKey~~' && !skip)
         {
           this.structure.push({
             id: key, label: this.capitalizeFirstLetter(key)
@@ -114,11 +114,11 @@ export class ~~className~~IndexComponent {
   }
 
   edit( data : ~~modelName~~) {
-    this._router.navigate(['~~filename~~/edit/' + data._id ] );
+    this._router.navigate(['~~filename~~/edit/' + data.~~primaryKey~~ ] );
   }
 
   confirmDelete(data : ~~modelName~~) {
-    let id_to_delete = data._id;
+    let id_to_delete = data.~~primaryKey~~;
     this._bootbox.confirm('Etes-vous sûr de vouloir supprimer le ~~model~~ '+id_to_delete+' ?', (result: Boolean)=>{
       if(result) {
         let sub = this._~~modelName~~Service.deleteById(id_to_delete).subscribe(

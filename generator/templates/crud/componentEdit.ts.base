@@ -111,7 +111,7 @@ export class ~~className~~EditComponent {
                 skip = true;
         });
         console.log(key+" => "+typeof inst[key]);
-        if (key != '_id' && !skip) {
+        if (key != '~~primaryKey~~' && !skip) {
           this.structure.push({
             id: key, label: this.capitalizeFirstLetter(key), type: (typeof inst[key])
           });

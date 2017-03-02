@@ -22,7 +22,6 @@ module.exports = {
         && file.indexOf('modules.module') == -1
         && file.indexOf('modules.routing') == -1
       ){
-
           var path = file.replace(basepath,"").replace("/"+filename,"");
           var componentpath = file.replace(basepath+"/","./").replace(".ts","");
           var className = helpers.camelize(filename.replace(".routing.ts",""));
@@ -52,13 +51,13 @@ importmodules += "import {"+className+"Module} from '"+file.replace("src/app/_mo
     //maj du fichier de route
     helpers.getFile(moduleroutingpath,(data)=>{
       route = "\n"+route+"\n";
-      var ph_debut = "//ROUTE INCLUES AUTOMATIQUEMENT";
-      var ph_fin= "//FIN ROUTES INCLUES AUTOMATIQUEMENT";
+      var ph_debut = "// ROUTE INCLUES AUTOMATIQUEMENT";
+      var ph_fin= "// FIN ROUTES INCLUES AUTOMATIQUEMENT";
       var retour = helpers.placeInPlaceHolder(data,ph_debut,ph_fin,route);
 
       imports = "\n"+imports+"\n";
-      var phi_debut = "//IMPORT INCLUS AUTOMATIQUEMENT";
-      var phi_fin= "//FIN IMPORT INCLUS AUTOMATIQUEMENT";
+      var phi_debut = "// IMPORT INCLUS AUTOMATIQUEMENT";
+      var phi_fin= "// FIN IMPORT INCLUS AUTOMATIQUEMENT";
       var retour = helpers.placeInPlaceHolder(retour,phi_debut,phi_fin,imports);
 
       helpers.createFile(moduleroutingdir,moduleroutingname,retour);
@@ -67,13 +66,13 @@ importmodules += "import {"+className+"Module} from '"+file.replace("src/app/_mo
     //maj du fichier de module
     helpers.getFile(modulefilepath,(data)=>{
       importmodules = "\n"+importmodules+"\n";
-      var ph_debut = "//IMPORT INCLUS AUTOMATIQUEMENT";
-      var ph_fin= "//FIN IMPORT INCLUS AUTOMATIQUEMENT";
+      var ph_debut = "// IMPORT INCLUS AUTOMATIQUEMENT";
+      var ph_fin= "// FIN IMPORT INCLUS AUTOMATIQUEMENT";
       var retour = helpers.placeInPlaceHolder(data,ph_debut,ph_fin,importmodules);
 
       modules = "\n"+modules+"\n";
-      var phi_debut = "//MODULE INCLUS AUTOMATIQUEMENT";
-      var phi_fin= "//FIN MODULE INCLUS AUTOMATIQUEMENT";
+      var phi_debut = "// MODULE INCLUS AUTOMATIQUEMENT";
+      var phi_fin= "// FIN MODULE INCLUS AUTOMATIQUEMENT";
       var retour = helpers.placeInPlaceHolder(retour,phi_debut,phi_fin,modules);
 
       helpers.createFile(moduleroutingdir,modulefilename,retour);

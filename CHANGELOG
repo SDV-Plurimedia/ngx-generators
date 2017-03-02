@@ -1,5 +1,10 @@
 #Changelog SDV-NG2-Generators
 
+## 1.0.0 - WIP
+* BC: Changement de syntaxe des placeholders de routing
+* ADD: Ajout d'un dossier de module d'exemple
+* ADD: clef primaire modifiable
+
 ## 0.5.0 - 02/03/2017
 * DEL: Retrait des fonctions dépréciés getNoCache()
 * UPD: tslitnt changement des double quote
