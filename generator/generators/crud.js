@@ -151,19 +151,15 @@ module.exports = {
         if( rep.toLowerCase() == 'y' ){
           var modelName = helpers.askDataSync('Comment voulez-vous nommer votre modèle ? (minuscule et tiret - , exemple: contact)');
           var modelClassName = helpers.ucfirst(helpers.camelize(modelName));
-          var ph_field = "//INSERT_FIELD_AUTO";
-          var ph_const = "//INSERT_CONSTRUCT_AUTO";
+          var ph_field = "// INSERT_FIELD_AUTO";
+          var ph_const = "// INSERT_CONSTRUCT_AUTO";
           var modelDir = "src/app/_modules/"+url+"/_models/";
 
 var modelContent =
 `export class `+modelClassName+` {
-    public _id: string = "";
-
     `+ph_field+`
 
     public constructor(obj?: any) {
-        this._id = obj && obj._id || null;
-
         `+ph_const+`
 
         /*//si vous n'utilisez plus le constructeur de form auto, ou si vous avez fixé la structure, vous pouvez remplacer le contenu de INSERT_CONSTRUCT_AUTO par ça:
