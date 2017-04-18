@@ -16,15 +16,15 @@ import {LoaderComponent}              from 'sdv-ng2-widgets/_widgets/loader/load
       <div class="col-lg-8" *ngFor="let champ of structure" >
         <div class="form-group">
           <label [attr.for]="champ.id">{{champ.label}}</label>
-          <template [ngIf]="champ.type=='string'">
+          <ng-template *ngIf="champ.type=='string'">
             <input type="text" [(ngModel)]="data~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
-          </template>
-          <template [ngIf]="champ.type=='number'">
+          </ng-template>
+          <ng-template *ngIf="champ.type=='number'">
             <input type="number" [(ngModel)]="data~~modelName~~[champ.id]" class="form-control" required name="{{champ.id}}" >
-          </template>
-          <template [ngIf]="champ.type=='date'">
+          </ng-template>
+          <ng-template *ngIf="champ.type=='date'">
             <datepicker [(ngModel)]="data~~modelName~~[champ.id]" name="{{champ.id}}" locale="fr" view-format="Do MMMM YYYY" model-format="YYYY-MM-DD" first-week-day-sunday="false"></datepicker>
-          </template>
+          </ng-template>
         </div>
       </div>
     </div>
