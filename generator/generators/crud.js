@@ -10,7 +10,7 @@ module.exports = {
             var api_endpoint = helpers.askDataSync('A quelle Url d\'API Laravel voulez-vous vous connecter ( exemple: "pulse/api-site" )? ');
 
 
-            var api_infyom = helpers.askDataSync('Cette api a elle été générée avec Infyom ? (y /n ) ');
+            var api_infyom = helpers.askDataSync('Cette API est-elle au format JSON API (si Laravel-Endpoint ou InfYom -> y ) ? (y /n ) ');
             if( api_infyom.toLowerCase() === 'y' ) {
                 api_infyom = '.data';
             } else {
