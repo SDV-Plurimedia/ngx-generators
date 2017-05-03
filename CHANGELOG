@@ -1,8 +1,10 @@
 #Changelog SDV-NG2-Generators
 
-## 1.0.0 - 03/05/2017 
-* BC: Changement de syntaxe des balises template vers ng-template pour angular4
+## 1.1.0 - 03/05/2017
 * ADD: Ajout d'un générateur pour les compléments
+
+## 1.0.0 - 20/04/2017
+* BC: Changement de syntaxe des balises template vers ng-template pour angular4
 
 ## 0.6.0 - 13/04/2017
 * BC: Changement de syntaxe des placeholders de modules routing
