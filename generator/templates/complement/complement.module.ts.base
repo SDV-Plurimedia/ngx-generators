@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../_shared/shared.module';
 
-import { ~~className~~ComplementComponent } from './_widgets/~~filename~~';
+import { ~~className~~ComplementComponent } from './_widgets/~~filename~~/~~filename~~';
+import { ~~className~~ComplementPopupComponent } from './_widgets/~~filename~~-popup/~~filename~~-popup';
 
 let widgets = [
-  ~~className~~ComplementComponent
+  ~~className~~ComplementComponent,
+  ~~className~~ComplementPopupComponent
 ];
 
 @NgModule({
@@ -14,7 +16,8 @@ let widgets = [
   declarations: [ ...widgets],
   exports: [ ...widgets],
   entryComponents: [
-    ~~className~~ComplementComponent
+    ~~className~~ComplementComponent,
+    ~~className~~ComplementPopupComponent
   ]
 })
 export class ~~className~~Module { }
