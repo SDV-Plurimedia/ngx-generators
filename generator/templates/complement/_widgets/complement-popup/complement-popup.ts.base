@@ -1,0 +1,91 @@
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Complement } from '../../../../complement/_models/complement';
+import { ComplementService } from '../../../../complement/_services/complement';
+import { NotificationService } from '../../../../_core/_services/notification';
+import { ComplementComponent } from '../../../../article/_widgets/complement/complement';
+import {MetaService} from '../../../../meta/_services/meta';
+import { PopupService } from '../../../../_core/_services/popup';
+import { ArticleEditComponent } from '../../../../article/edit/edit';
+
+@Component({
+  selector: '~~filename~~-popup',
+  template: `<div class="panel-heading">
+    <span>POPUP de Complément type tier {{complement.type}}</span>
+  </div>
+  <div class="panel-body" >
+
+      <div> Type de complément : {{complement.type}}</div>
+
+      TEST ECRITURE <input type="text" [(ngModel)]="complement.texte" /><br/>
+      TEST LECTURE <div *ngIf="complement.texte">{{complement.texte}}</div>
+
+      <div *ngIf="complement.path">{{complement.path}}</div>
+      <div *ngIf="complement.titre">{{complement.titre}}</div>
+~~metaForm~~
+  </div>
+  <div class="panel-footer clearfix">
+    <button class="pull-right btn btn-xs btn-success" (click)="save()">Enregistrer</button>
+    <button class="pull-right btn btn-xs btn-danger" (click)="cancel()">Annuler</button>
+  </div>`
+})
+
+export class ~~className~~ComplementPopupComponent implements OnInit, OnDestroy {
+  @Input() complement: Complement;
+  public parent: ArticleEditComponent = null; // remplie par l'appellant
+  // les metas du complement
+  public meta = {};
+
+  private subs = [];
+
+  constructor(
+    private _complementServ: ComplementService,
+    private _metaService: MetaService,
+    private _notifService: NotificationService,
+    private _popup: PopupService
+  ) { }
+
+  ngOnInit() {
+    console.log(this.complement);
+    let sub = this._metaService.getMetaAndData('complement', this.complement.id_complement).subscribe(res => {
+      console.log('meta complement', res);
+      this.meta = res.metadatas;
+    }, err => {
+      console.log('erreur', err);
+    });
+    this.subs.push(sub);
+  }
+
+  public save() {
+
+    let notif = this._notifService.warning('Enregistrement du complément en cours...');
+
+    let sub = this._metaService.saveMetaDatas('complement', this.complement.id_complement, this.meta).subscribe(
+    res => {
+      console.log('meta sauves dans mongo');
+    },
+    err => {
+      notif = this._notifService.update(notif,'Une erreur s\'est produite','error');
+    });
+    this.subs.push(sub);
+
+    // il existe aussi un updateComplement, a voir dans la page ArticleEditComponent
+    // pour un création de complement et l'ajout à l'article etc...
+    sub = this.parent.saveComplement(this.complement).subscribe(
+      result => {
+        this._popup.clean();
+      },
+      error => {
+        // les erreurs sont déjàa géré par l'article
+      }
+    );
+    this.subs.push(sub);
+  }
+
+  public cancel() {
+    this._popup.clean();
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach(sub => sub.unsubscribe());
+  }
+}

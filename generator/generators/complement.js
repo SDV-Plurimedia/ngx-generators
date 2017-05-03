@@ -40,7 +40,10 @@ module.exports = {
     var generator_templates = __dirname+"/../templates/complement/";
     asq.parallel([
             (cb) => {
-                helpers.getFileAndReplaceOccurences(generator_templates + "_widgets/complement.ts.base", conf, cb);
+                helpers.getFileAndReplaceOccurences(generator_templates + "_widgets/complement/complement.ts.base", conf, cb);
+            },
+            (cb) => {
+                helpers.getFileAndReplaceOccurences(generator_templates + "_widgets/complement-popup/complement-popup.ts.base", conf, cb);
             },
             (cb) => {
                 helpers.getFileAndReplaceOccurences(generator_templates + "complement.module.ts.base", conf, cb);
@@ -56,13 +59,17 @@ module.exports = {
 
     var write = function(results) {
         var complement = results[0];
-        var modulets = results[1];
-        var route = results[2];
+        var complement_popup = results[1];
+        var modulets = results[2];
+        var route = results[3];
         var asq = require("async");
         asq.parallel(
             [
                 (cb) => {
-                    helpers.createFileIfNotExist(dirname + '/_widgets', filename + ".ts", complement, cb);
+                    helpers.createFileIfNotExist(dirname + '/_widgets/' + filename, filename + ".ts", complement, cb);
+                },
+                (cb) => {
+                    helpers.createFileIfNotExist(dirname + '/_widgets/' + filename + '-popup', filename + '-popup.ts', complement_popup, cb);
                 },
                 (cb) => {
                     helpers.createFileIfNotExist(dirname, filename + '.module.ts', modulets, cb);

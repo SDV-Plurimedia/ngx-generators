@@ -1,11 +1,11 @@
 // A ADAPTER EN FONCTION DE L'EMPLACEMENT DU GENERATEUR
 //
 import {Component, Input, OnInit, OnDestroy} from '@angular/core';
-import {Complement} from '../../../complement/_models/complement';
-import {ComplementService} from '../../../complement/_services/complement';
-import {MetaService} from '../../../meta/_services/meta';
-import {NotificationService} from '../../../_core/_services/notification';
-import { ComplementComponent } from '../../../article/_widgets/complement/complement';
+import {Complement} from '../../../../complement/_models/complement';
+import {ComplementService} from '../../../../complement/_services/complement';
+import {MetaService} from '../../../../meta/_services/meta';
+import {NotificationService} from '../../../../_core/_services/notification';
+import { ComplementComponent } from '../../../../article/_widgets/complement/complement';
 
 @Component({
   selector: '~~filename~~',
