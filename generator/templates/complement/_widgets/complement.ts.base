@@ -1,0 +1,88 @@
+// A ADAPTER EN FONCTION DE L'EMPLACEMENT DU GENERATEUR
+//
+import {Component, Input, OnInit, OnDestroy} from '@angular/core';
+import {Complement} from '../../../complement/_models/complement';
+import {ComplementService} from '../../../complement/_services/complement';
+import {MetaService} from '../../../meta/_services/meta';
+import {NotificationService} from '../../../_core/_services/notification';
+import { ComplementComponent } from '../../../article/_widgets/complement/complement';
+
+@Component({
+  selector: '~~filename~~',
+  template: `<div class="panel panel-default" >
+    <div class="panel-heading">
+      <span>Complément type tier</span>
+      <ul class="tool-bar">
+      <li><a href="javascript:void(null)"><span class="fa fa-remove" (click)="delete()"></span></a></li>
+      </ul>
+    </div>
+    <div class="panel-body" >
+        <div> Type de complément : {{complement.type}}</div>
+        <div *ngIf="complement.path">{{complement.path}}</div>
+        <div *ngIf="complement.texte">{{complement.texte}}</div>
+        <div *ngIf="complement.titre">{{complement.titre}}</div>
+~~metaForm~~
+        <button (click)="save()">Sauvegarder</button>
+    </div>
+  </div>`
+})
+
+export class ~~className~~ComplementComponent  implements OnInit, OnDestroy {
+  @Input() complement: Complement;
+  public complement_types = null;
+  public type: string;
+  public parent: ComplementComponent = null;
+  // les metas du complement
+  public meta = {};
+
+  private subs = [];
+
+  constructor(
+    private _complementServ: ComplementService,
+    private _metaService: MetaService,
+    private _notifService: NotificationService
+  ) { }
+
+  ngOnInit() {
+    console.log('complement tier', this.complement);
+    let sub = this._metaService.getMetaAndData('complement', this.complement.id_complement).subscribe(res => {
+      console.log('meta complement', res);
+      this.meta = res.metadatas;
+    }, err => {
+      console.log('erreur', err);
+    });
+    this.subs.push(sub);
+  }
+
+  delete() {
+    this.parent.delete();
+  }
+
+  public save(){
+
+    let notif = this._notifService.warning('Enregistrement du complément en cours...');
+
+    this._metaService.saveMetaDatas('complement', this.complement.id_complement, this.meta).subscribe(
+    res => {
+      console.log('meta sauves dans mongo');
+    },
+    err => {
+      notif = this._notifService.update(notif,'Une erreur s\'est produite','error');
+    });
+
+    this._complementServ.updateComplement( new Complement(this.complement) ).subscribe(
+      result => {
+        notif = this._notifService.update(notif,'Complément enregistré','success');
+        // faire l'update ici ?
+      },
+      error => {
+        notif = this._notifService.update(notif,'Une erreur s\'est produite','error');
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach(sub => sub.unsubscribe());
+  }
+
+}
