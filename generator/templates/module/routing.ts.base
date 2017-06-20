@@ -1,0 +1,15 @@
+import { Routes, RouterModule } from '@angular/router';
+import { AuthGuardService } from '~~hierarchy~~../../_core/_services/auth-guard';
+import { ~~className~~Component } from './~~filename~~.component';
+
+export const ~~routeName~~Routes: Routes = [
+  {
+    path: '~~moduleName~~',
+    component: ~~className~~Component,
+    canActivate: [AuthGuardService],
+    children: [
+      // Inserer ici vos pages filles
+    ]
+
+  }
+];

@@ -1,0 +1,15 @@
+import {Component, OnInit} from '@angular/core';
+
+@Component({
+  selector: '~~filename~~',
+  template: `<router-outlet></router-outlet>`
+})
+
+export class ~~className~~Component implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

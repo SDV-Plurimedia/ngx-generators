@@ -1,0 +1,57 @@
+/*
+
+Le module ~~modelName~~
+
+*/
+
+import { NgModule } from '@angular/core';
+import { SharedModule } from '~~hierarchy~~../../_shared/shared.module';
+
+// les pages
+import { ~~className~~Component } from './~~filename~~.component';
+
+let pages =  [
+  ~~className~~Component
+];
+
+// les widgets
+let widgets =  [
+
+];
+
+// les directives
+let directives = [
+
+];
+
+// les pipes
+let pipes = [
+
+];
+
+// les services
+let services = [
+
+];
+
+@NgModule({
+  imports: [
+    SharedModule
+  ],
+  declarations: [
+    ...widgets,
+    ...pipes,
+    ...directives,
+    ...pages
+  ],
+  exports: [
+    ...widgets,
+    ...pipes,
+    ...directives
+  ],
+  providers: [
+    ...services
+  ]
+})
+export class ~~className~~Module {
+ }
