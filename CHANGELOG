@@ -1,8 +1,11 @@
 #Changelog SDV-NG2-Generators
 
 
+## 1.2.1
+* ADD: Générateur de module simplifié
+
 ## 1.2.0 
-* Générateur de route intégre les widgets de modules 
+* ADD: Générateur de route intégre les widgets de modules 
 
 ## 1.1.0 - 03/05/2017
 * ADD: Ajout d'un générateur pour les compléments

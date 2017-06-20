@@ -7,40 +7,34 @@ Le module ~~modelName~~
 import { NgModule } from '@angular/core';
 import { SharedModule } from '~~hierarchy~~../../_shared/shared.module';
 
-//les pages
+// les pages
 import { ~~className~~Component } from './~~filename~~.component';
 import { ~~className~~IndexComponent } from './index/index';
 import { ~~className~~EditComponent } from './edit/edit';
 
-var pages =  [
+let pages =  [
   ~~className~~Component,
   ~~className~~IndexComponent,
   ~~className~~EditComponent
 ];
 
-//les widgets
-//import { AutocompleteComponent } from './_widgets/autocomplete/autocomplete';
-
-var widgets =  [
-  //AutocompleteComponent,
+// les widgets
+let widgets =  [
 ];
 
-//les directives
-//import { CollapseDirective } from './_directives/collapse';
-var directives = [
-  //DNDDirective,
+// les directives
+let directives = [
 ];
 
-//les pipes
-//import { StringShortenedPipe } from './_pipes/string-shortened';
-
-var pipes = [
-  //StringShortenedPipe,
+// les pipes
+let pipes = [
 ];
 
-//les services
+// les services
 import { ~~modelName~~Service } from './_services/~~model~~';
-
+let services = [
+  ~~modelName~~Service
+]
 
 @NgModule({
   imports: [
@@ -58,7 +52,7 @@ import { ~~modelName~~Service } from './_services/~~model~~';
     ...directives
   ],
   providers: [
-    ~~modelName~~Service
+    ...services
   ]
 })
 export class ~~className~~Module {

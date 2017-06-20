@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Rx';
+import {Observable} from 'rxjs/observable';
 
 import {~~modelName~~} from '~~hierarchy~~../../../../../~~modelPath~~';
 import {HttpL5Service} from '~~hierarchy~~../../../_core/_services/http/http-l5';
