@@ -2,9 +2,13 @@ var helpers = require('../../helpers');
 
 module.exports = {
   generate: function(argv) {
-    var redirectTo = helpers.askDataSync(
-      'Quelle route par défaut souhaitez-vous utiliser ? (ex: "/dashboard")'
-    );
+    var redirectTo = null;
+
+    if (argv[3] !== undefined) {
+      redirectTo = argv[3];
+    } else {
+      redirectTo = helpers.askDataSync('Quelle route par défaut souhaitez-vous utiliser ? (ex: "/dashboard")');
+    }
 
     if (redirectTo === '' || redirectTo === null || redirectTo === undefined) {
       redirectTo = '/dashboard';
