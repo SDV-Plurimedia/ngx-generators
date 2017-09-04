@@ -1,5 +1,14 @@
 #Changelog SDV-NG2-Generators
 
+# 1.3.0
+* ADD : Générateur de route intégre les widgets du fil d'activité des modules
+
+## 1.2.3
+* FIX : mise à jour du numéro version
+* ADD : pouvoir passer la route par défaut en paramètre
+
+## 1.2.2
+* ADD: Ajout d'un script permettant de générer la route par défaut
 
 ## 1.2.1
 * ADD: Générateur de module simplifié
