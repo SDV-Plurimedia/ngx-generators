@@ -87,6 +87,7 @@ module.exports = {
     var comp_popup_merge = "";
     var topic_merge = "";
     var all_meta_merge = "";
+    var comp_activite_merge = ""; // les widgets du dashboard
     widgets.forEach(function(nom_widgets){
       art_merge += `...`+nom_widgets+`.widgets_article_edition,
 `;
@@ -97,6 +98,8 @@ module.exports = {
       topic_merge += `...`+nom_widgets+`.widgets_topic_edition,
 `;
       all_meta_merge = "..."+nom_widgets+`.widgets_all_meta,
+`;
+      comp_activite_merge += `...`+nom_widgets+`.widgets_complement_activite,
 `;
     });
 
@@ -170,6 +173,9 @@ module.exports = {
 
           all_meta_merge = "\n"+all_meta_merge+"\n";
           var retour = helpers.placeInPlaceHolder(retour,"// DEBUT-WIDGET-ALL-META-PLACEHOLDER","// FIN-WIDGET-ALL-META-PLACEHOLDER",all_meta_merge);
+
+          comp_activite_merge = "\n"+comp_activite_merge+"\n";
+          var retour = helpers.placeInPlaceHolder(retour, "// DEBUT-WIDGET-COMP-ACTIVITE-PLACEHOLDER", "// FIN-WIDGET-COMP-ACTIVITE-PLACEHOLDER", comp_activite_merge);
 
           helpers.createFile(modules_base_dir,widgets_file,retour);
         });
