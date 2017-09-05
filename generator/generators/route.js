@@ -1,6 +1,9 @@
 var helpers = require('../../helpers');
 
+
+
 module.exports = {
+
 
   generate: function(argv){
 
@@ -77,7 +80,7 @@ module.exports = {
             import_widgets += `import { widgets as `+widgetName+` } from '`+widget_path+`';
 `;
             // on stoque un tableau des fichiers widgets
-            widgets.push(widgetName);
+            widgets.push({name: widgetName, path: widget_path});
         }
     });
 
@@ -88,25 +91,49 @@ module.exports = {
     var topic_merge = "";
     var all_meta_merge = "";
     var comp_activite_merge = ""; // les widgets du dashboard
-    widgets.forEach(function(nom_widgets){
-      art_merge += `...`+nom_widgets+`.widgets_article_edition,
-`;
-      comp_merge += `...`+nom_widgets+`.widgets_complement_panel,
-`;
-      comp_popup_merge += `...`+nom_widgets+`.widgets_complement_popup,
-`;
-      topic_merge += `...`+nom_widgets+`.widgets_topic_edition,
-`;
-      all_meta_merge = "..."+nom_widgets+`.widgets_all_meta,
-`;
-      comp_activite_merge += `...`+nom_widgets+`.widgets_complement_activite,
-`;
-    });
 
     // Remplacement dans les fichiers
 
     var modules_base_dir = 'src/app/_modules/';
     var template_modules_dir = __dirname+"/../templates/modules/";
+
+    widgets.forEach(function(widget){
+      widget.path = widget.path.replace('./', '') + '.ts';
+
+      helpers.getFile(modules_base_dir + widget.path,(data)=>{
+
+        if (data.toString().indexOf('widgets_article_edition') !== -1) {
+          art_merge += `...`+widget.name+`.widgets_article_edition,
+`;
+        }
+
+        if (data.toString().indexOf('widgets_complement_panel') !== -1) {
+          comp_merge += `...`+widget.name+`.widgets_complement_panel,
+`;
+        }
+
+        if (data.toString().indexOf('widgets_complement_popup') !== -1) {
+          comp_popup_merge += `...`+widget.name+`.widgets_complement_popup,
+`;
+        }
+
+        if (data.toString().indexOf('widgets_topic_edition') !== -1) {
+          topic_merge += `...`+widget.name+`.widgets_topic_edition,
+`;
+        }
+
+        if (data.toString().indexOf('widgets_all_meta') !== -1) {
+          all_meta_merge = "..."+widget.name+`.widgets_all_meta,
+`;
+        }
+
+        if (data.toString().indexOf('widgets_complement_activite') !== -1) {
+          comp_activite_merge += `...`+widget.name+`.widgets_complement_activite,
+`;
+        }
+      });
+
+    });
 
     // création du fichier route si inexistant
     var routing_file = 'modules.routing.ts';
