@@ -123,7 +123,7 @@ module.exports = {
         }
 
         if (data.toString().indexOf('widgets_all_meta') !== -1) {
-          all_meta_merge = "..."+widget.name+`.widgets_all_meta,
+          all_meta_merge += "..."+widget.name+`.widgets_all_meta,
 `;
         }
 
