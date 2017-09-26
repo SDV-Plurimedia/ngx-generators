@@ -1,5 +1,8 @@
 #Changelog SDV-NG2-Generators
 
+# 1.3.3
+* ADD : Générateur de route intègre les widgets du moteur de recherche
+
 # 1.3.2
 * FIX: import des widgets_all_meta
 
@@ -19,8 +22,8 @@
 ## 1.2.1
 * ADD: Générateur de module simplifié
 
-## 1.2.0 
-* ADD: Générateur de route intégre les widgets de modules 
+## 1.2.0
+* ADD: Générateur de route intégre les widgets de modules
 
 ## 1.1.0 - 03/05/2017
 * ADD: Ajout d'un générateur pour les compléments
