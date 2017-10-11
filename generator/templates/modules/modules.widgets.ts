@@ -48,5 +48,10 @@ export const widgets = {
     // DEBUT-WIDGET-SEARCH-PLACEHOLDER
 
     // FIN-WIDGET-SEARCH-PLACEHOLDER
+  ],
+  widgets_article_search_result: [
+    // DEBUT-WIDGET-SEARCH-RESULT-PLACEHOLDER
+
+    // FIN-WIDGET-SEARCH-RESULT-PLACEHOLDER
   ]
 };

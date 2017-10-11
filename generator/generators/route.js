@@ -218,7 +218,7 @@ module.exports = {
           var retour = helpers.placeInPlaceHolder(retour, "// DEBUT-WIDGET-SEARCH-PLACEHOLDER", "// FIN-WIDGET-SEARCH-PLACEHOLDER", search_merge);
 
           search_result_merge = "\n"+search_result_merge+"\n";
-          var retour = helpers.placeInPlaceHolder(retour, "// DEBUT-WIDGET-SEARCH-PLACEHOLDER", "// FIN-WIDGET-SEARCH-PLACEHOLDER", search_result_merge);
+          var retour = helpers.placeInPlaceHolder(retour, "// DEBUT-WIDGET-SEARCH-RESULT-PLACEHOLDER", "// FIN-WIDGET-SEARCH-RESULT-PLACEHOLDER", search_result_merge);
 
           helpers.createFile(modules_base_dir,widgets_file,retour);
         });
