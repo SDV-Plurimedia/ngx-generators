@@ -225,8 +225,61 @@ module.exports = {
       });
     });
 
+
+
+
+    var displayrules = "";
+    var imports_displayrules = "";
+    var appels_addRules = "";
+    // préparation des règles d'affichage
+    files.forEach((file)=>{
+      if(
+        //on recherche les fichiers de module
+        file.indexOf('displayrules.ts') !== -1
+        //exclusions
+        && file.indexOf('dist') === -1
+        && file.indexOf('modules.displayrules') === -1
+      ){
+          var filename = file.split('/').pop();//juste le nom du fichier
+          var displayrules_path = file.replace(basepath,'.').replace(".ts","");
+
+          filename = filename.replace('.displayrules.ts','').replace("mod_",'').replace("_spa",'');
+          var className = helpers.camelize(filename);
+          var displayrulesName = helpers.lcfirst(className) + "DisplayRules";
+          var displayrulesServiceName = displayrulesName + "Service";
+
+          displayrules += `private _`+displayrulesServiceName+`: `+displayrulesServiceName+`,
+`;
+          imports_displayrules += `import { `+displayrulesServiceName+` } from '`+displayrules_path+`';
+`;
+          appels_addRules += `this.addRules(_`+displayrulesServiceName+`.getRules());
+`;
+        }
+    });
+
+    // création du fichier des règles d'affichage si inexistant
+    var displayrules_file = 'modules.displayrules.ts';
+    helpers.getFile(template_modules_dir+displayrules_file,(data)=>{
+      helpers.createFileIfNotExist(modules_base_dir, displayrules_file, data, (cb) => {
+        //maj du fichier des règles d'affichage
+        helpers.getFile(modules_base_dir+displayrules_file,(data)=>{
+          imports_displayrules = "\n"+imports_displayrules+"\n";
+          var retour = helpers.placeInPlaceHolder(data,"// DEBUT IMPORT PLACEHOLDER","// FIN IMPORT PLACEHOLDER",imports_displayrules);
+
+          displayrules = "\n"+displayrules+"\n";
+          retour = helpers.placeInPlaceHolder(retour,"// RULES INCLUES AUTOMATIQUEMENT","// FIN RULES INCLUES AUTOMATIQUEMENT",displayrules);
+
+          appels_addRules = "\n"+appels_addRules+"\n";
+          retour = helpers.placeInPlaceHolder(retour,"// PUSH DES RULES INCLUES AUTOMATIQUEMENT","// FIN PUSH DES RULES INCLUES AUTOMATIQUEMENT",appels_addRules);
+
+          helpers.createFile(modules_base_dir,displayrules_file,retour);
+        });
+      });
+    });
+
+
+
     return true;
   }
 
 }
-

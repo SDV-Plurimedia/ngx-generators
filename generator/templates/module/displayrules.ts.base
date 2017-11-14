@@ -1,0 +1,25 @@
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class ~~moduleName~~DisplayRulesService {
+    private rules = [];
+
+    constructor(
+    ) {
+      /**
+      ** Appel d'une methode de remplissage du tableau des rules
+      **/
+      // this._set_rule_de_test();
+    }
+
+    getRules() {
+      return this.rules;
+    }
+
+    /**
+    ** Methode qui va mettre a jour le tableau des rules
+    **/
+    //_set_rule_de_test() {
+    //  this.rules['rule_de_test'] = FALSE;
+    //}
+};

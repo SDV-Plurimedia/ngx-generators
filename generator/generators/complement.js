@@ -50,6 +50,9 @@ module.exports = {
             },
             (cb) => {
                 helpers.getFileAndReplaceOccurences(generator_templates + "complement.routing.ts.base", conf, cb);
+            },
+            (cb) => {
+                helpers.getFileAndReplaceOccurences(generator_templates + "complement.displayrules.ts.base", conf, cb);
             }
         ],
         function(err, results) {
@@ -76,6 +79,9 @@ module.exports = {
                 },
                 (cb) => {
                     helpers.createFileIfNotExist(dirname, filename + '.routing.ts', route, cb);
+                },
+                (cb) => {
+                    helpers.createFileIfNotExist(dirname, filename + '.displayrules.ts', route, cb);
                 }
             ],
             function(err, results) {
