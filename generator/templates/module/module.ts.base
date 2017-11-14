@@ -30,8 +30,9 @@ let pipes = [
 ];
 
 // les services
+import { ~~routeName~~DisplayRulesService } from './~~filename~~.displayrules';
 let services = [
-
+  ~~routeName~~DisplayRulesService
 ];
 
 @NgModule({

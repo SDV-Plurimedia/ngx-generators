@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class ~~moduleName~~DisplayRulesService {
+export class ~~routeName~~DisplayRulesService {
     private rules = [];
 
     constructor(
