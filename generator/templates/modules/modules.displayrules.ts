@@ -7,7 +7,7 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class DisplayRules {
 
-  public rules = [];
+    public displayRulesServices: Array<Object> = [];
 
   constructor(
     // RULES INCLUES AUTOMATIQUEMENT
@@ -17,11 +17,4 @@ export class DisplayRules {
     // FIN PUSH DES RULES INCLUES AUTOMATIQUEMENT
   }
 
-  addRules(moduleRules) {
-    for (var k in moduleRules) {
-      if (moduleRules.hasOwnProperty(k)) {
-        this.rules[k] = moduleRules[k];
-      }
-    }
-  }
 };

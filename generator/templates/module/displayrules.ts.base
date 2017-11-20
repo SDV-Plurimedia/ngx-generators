@@ -2,24 +2,32 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ~~routeName~~DisplayRulesService {
-    private rules = [];
+  private rules = null;
+  private complexrules = null;
 
     constructor(
     ) {
       /**
       ** Appel d'une methode de remplissage du tableau des rules
       **/
-      // this._set_rule_de_test();
+      /*this.rules = {
+        'regle_d_affichage': this._ma_methode,
+      };*/
     }
 
-    getRules() {
+    public getRules() {
       return this.rules;
     }
+
+    public getComplexRules() {
+      return this.complexrules;
+    }
+
 
     /**
     ** Methode qui va mettre a jour le tableau des rules
     **/
-    //_set_rule_de_test() {
-    //  this.rules['rule_de_test'] = FALSE;
+    //_ma_methode() {
+    //   return TRUE || FALSE;
     //}
 };
