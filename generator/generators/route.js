@@ -252,7 +252,7 @@ module.exports = {
 `;
           imports_displayrules += `import { `+displayrulesServiceName+` } from '`+displayrules_path+`';
 `;
-          appels_addRules += `this.addRules(_`+displayrulesServiceName+`.getRules());
+          appels_addRules += `this.displayRulesServices.push(_`+displayrulesServiceName+`);
 `;
         }
     });

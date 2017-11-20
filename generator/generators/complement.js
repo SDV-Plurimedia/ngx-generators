@@ -65,6 +65,7 @@ module.exports = {
         var complement_popup = results[1];
         var modulets = results[2];
         var route = results[3];
+        var displayrules = results[4];
         var asq = require("async");
         asq.parallel(
             [
@@ -81,7 +82,7 @@ module.exports = {
                     helpers.createFileIfNotExist(dirname, filename + '.routing.ts', route, cb);
                 },
                 (cb) => {
-                    helpers.createFileIfNotExist(dirname, filename + '.displayrules.ts', route, cb);
+                    helpers.createFileIfNotExist(dirname, filename + '.displayrules.ts', displayrules, cb);
                 }
             ],
             function(err, results) {
