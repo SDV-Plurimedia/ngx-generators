@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ~~routeName~~DisplayRulesService {
-  private rules = null;
-  private complexrules = null;
+  private rules = {};
+  private complexrules = {};
 
     constructor(
     ) {
