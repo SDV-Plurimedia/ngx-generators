@@ -50,6 +50,9 @@ module.exports = {
             },
             (cb) => {
                 helpers.getFileAndReplaceOccurences(generator_templates + "complement.routing.ts.base", conf, cb);
+            },
+            (cb) => {
+                helpers.getFileAndReplaceOccurences(generator_templates + "complement.displayrules.ts.base", conf, cb);
             }
         ],
         function(err, results) {
@@ -62,6 +65,7 @@ module.exports = {
         var complement_popup = results[1];
         var modulets = results[2];
         var route = results[3];
+        var displayrules = results[4];
         var asq = require("async");
         asq.parallel(
             [
@@ -76,6 +80,9 @@ module.exports = {
                 },
                 (cb) => {
                     helpers.createFileIfNotExist(dirname, filename + '.routing.ts', route, cb);
+                },
+                (cb) => {
+                    helpers.createFileIfNotExist(dirname, filename + '.displayrules.ts', displayrules, cb);
                 }
             ],
             function(err, results) {

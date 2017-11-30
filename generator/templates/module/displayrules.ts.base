@@ -1,0 +1,33 @@
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class ~~routeName~~DisplayRulesService {
+  private rules = {};
+  private complexrules = {};
+
+    constructor(
+    ) {
+      /**
+      ** Appel d'une methode de remplissage du tableau des rules
+      **/
+      /*this.rules = {
+        'regle_d_affichage': this._ma_methode,
+      };*/
+    }
+
+    public getRules() {
+      return this.rules;
+    }
+
+    public getComplexRules() {
+      return this.complexrules;
+    }
+
+
+    /**
+    ** Methode qui va mettre a jour le tableau des rules
+    **/
+    //_ma_methode() {
+    //   return TRUE || FALSE;
+    //}
+};

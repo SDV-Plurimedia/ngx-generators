@@ -48,6 +48,9 @@ module.exports = {
                     },
                     (cb) => {
                         helpers.getFileAndReplaceOccurences(generator_templates+"routing.ts.base", conf, cb);
+                    },
+                    (cb) => {
+                        helpers.getFileAndReplaceOccurences(generator_templates+"displayrules.ts.base", conf, cb);
                     }
                 ],
                 function(err, results) {
@@ -60,6 +63,7 @@ module.exports = {
                 var moduleContent = results[1];
                 var componentContent = results[2];
                 var routingContent = results[3];
+                var displayrulesContent = results[4];
 
                 var asq = require("async");
                 asq.parallel(
@@ -75,6 +79,9 @@ module.exports = {
                         },
                         (cb) => {
                             helpers.createFileIfNotExist(dirname, filename + ".routing.ts", routingContent, cb)
+                        },
+                        (cb) => {
+                            helpers.createFileIfNotExist(dirname, filename + ".displayrules.ts", displayrulesContent, cb)
                         }
                     ],
                     function() {
