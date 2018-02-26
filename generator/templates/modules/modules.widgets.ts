@@ -44,14 +44,22 @@ export const widgets = {
 
     // FIN-WIDGET-COMP-ACTIVITE-PLACEHOLDER
   ],
+
   widgets_article_search: [
     // DEBUT-WIDGET-SEARCH-PLACEHOLDER
 
     // FIN-WIDGET-SEARCH-PLACEHOLDER
   ],
+
   widgets_article_search_result: [
     // DEBUT-WIDGET-SEARCH-RESULT-PLACEHOLDER
 
     // FIN-WIDGET-SEARCH-RESULT-PLACEHOLDER
+  ],
+  
+  widgets_dashboard: [
+    // DEBUT-WIDGET-DASHBOARD-PLACEHOLDER
+
+    // FIN-WIDGET-DASHBOARD-PLACEHOLDER
   ]
 };

@@ -93,6 +93,7 @@ module.exports = {
     var comp_activite_merge = ""; // les widgets du dashboard
     var search_merge = ""; // les widgets pour la recherche
     var search_result_merge = ""; // les widgets pour les resultats de la recherche
+    var dashboard_merge = ""; // les widgets du dashboard
 
     // Remplacement dans les fichiers
 
@@ -139,6 +140,10 @@ module.exports = {
         }
         if (data.toString().indexOf('widgets_article_search_result') !== -1) {
           search_result_merge += `...`+widget.name+`.widgets_article_search_result,
+`;
+        }
+        if (data.toString().indexOf('widgets_dashboard') !== -1) {
+          dashboard_merge += `...`+widget.name+`.widgets_dashboard,
 `;
         }
       });
@@ -219,6 +224,9 @@ module.exports = {
 
           search_result_merge = "\n"+search_result_merge+"\n";
           var retour = helpers.placeInPlaceHolder(retour, "// DEBUT-WIDGET-SEARCH-RESULT-PLACEHOLDER", "// FIN-WIDGET-SEARCH-RESULT-PLACEHOLDER", search_result_merge);
+
+          dashboard_merge = "\n"+dashboard_merge+"\n";
+          var retour = helpers.placeInPlaceHolder(retour, "// DEBUT-WIDGET-DASHBOARD-PLACEHOLDER", "// FIN-WIDGET-DASHBOARD-PLACEHOLDER", dashboard_merge);
 
           helpers.createFile(modules_base_dir,widgets_file,retour);
         });
