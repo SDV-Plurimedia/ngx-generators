@@ -1,5 +1,11 @@
 #Changelog SDV-NG2-Generators
 
+# 1.4.2 - 26/02/2018
+* ADD : Générateur de route intègre les widgets de dashboard
+
+# 1.4.1
+* ADD : Générateur de route intègre les displayrules
+
 # 1.4.0
 * ADD: Générateur de route intègre les widgets des résultats de recherche
 
