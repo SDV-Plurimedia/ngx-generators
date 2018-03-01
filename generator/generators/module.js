@@ -103,10 +103,23 @@ module.exports = {
         }
 
 
+        //Etape 1
 
+        //on vérifie si le nom du module est déja transmis
+        if (typeof process.argv[3] !== 'undefined' && process.argv[3] !== ''){
+            var module_name = process.argv[3].toLowerCase();
+        }
+        else{
+            var module_name = helpers.askDataSync('Quel nom voulez-vous pour votre module? (minuscule et tiret -, exemple: annuaire-contact) ');
+        }
 
-        var module_name = helpers.askDataSync('Quelle nom voulez-vous pour votre module? (minuscule et tiret -, exemple: annuaire-contact) ');
-        createFiles(module_name);
+        if(module_name !== ''){
+            createFiles(module_name);
+        }
+        else{
+            console.log('Merci de fournir un nom pour votre module');
+        }
+
 
     }
 }

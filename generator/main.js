@@ -14,7 +14,7 @@ const installPath = __dirname+"/generators/";
   console.log(index + ': ' + val);
 });*/
 helpers.printSeparator();
-console.log(" GENERATEUR DE CODE ANGULAR2 ");
+console.log(" GENERATEUR DE CODE ANGULAR ");
 
 if(process.argv.length == 2){
   helpers.printSeparator();

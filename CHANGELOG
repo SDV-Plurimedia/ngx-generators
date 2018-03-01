@@ -1,5 +1,8 @@
 #Changelog SDV-NG2-Generators
 
+# 1.5.0 - 01/03/2018
+* UPD : Maj des générateurs de module et crud pour displayrules et widgets
+
 # 1.4.2 - 26/02/2018
 * ADD : Générateur de route intègre les widgets de dashboard
 

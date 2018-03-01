@@ -90,6 +90,9 @@ module.exports = {
                     },
                     (cb) => {
                         helpers.getFileAndReplaceOccurences(generator_templates+"displayrules.ts.base", conf, cb);
+                    },
+                    (cb) => {
+                        helpers.getFileAndReplaceOccurences(generator_templates + "widgets.ts.base", conf, cb);
                     }
                 ],
                 function(err, results) {
@@ -105,6 +108,7 @@ module.exports = {
                 var componentContent = results[4];
                 var routingContent = results[5];
                 var displayrulesContent = results[6];
+                var widgetsContent = results[7];
 
                 var asq = require("async");
                 asq.parallel(
@@ -130,6 +134,10 @@ module.exports = {
                         (cb) => {
                             helpers.createFileIfNotExist(dirname, filename + ".displayrules.ts", displayrulesContent, cb)
 
+                        },
+                        (cb) => {
+                            helpers.createFileIfNotExist(dirname, filename + ".widgets.ts", widgetsContent, cb)
+
                         }
                     ],
                     function() {
@@ -151,9 +159,20 @@ module.exports = {
         }
 
 
+        //Etape 1
 
+        //on vérifie si le nom du module est déja transmis
+        if (typeof process.argv[3] !== 'undefined' && process.argv[3] !== '') {
+            var url = process.argv[3].toLowerCase();
+        }
+        else {
+            var url = helpers.askDataSync('Quel nom voulez-vous pour votre module de CRUD? (minuscule et tiret -, exemple: annuaire-contact) ');
+        }
 
-        var url = helpers.askDataSync('Quelle nom voulez-vous pour votre module de CRUD? (minuscule et tiret -, exemple: annuaire-contact) ');
+        if (url === '') {
+            console.log('Merci de fournir un nom pour votre module');
+            return false;
+        }
 
         var rep = helpers.askDataSync('Voulez vous générer un modèle pour votre CRUD? (y / n)');
         if( rep.toLowerCase() == 'y' ){
