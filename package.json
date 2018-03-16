@@ -1,11 +1,11 @@
 {
-  "name": "sdv-ng2-generators",
+  "name": "@sdvplurimedia/ngx-generators",
   "version": "1.5.0",
   "license": "MIT",
-  "description": "Angular2 - SDV Generators",
+  "description": "SDV Plurimédia - Angular Generators",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:SDV-Plurimedia/sdv-ng2-generators.git"
+    "url": "git+ssh://git@github.com:SDV-Plurimedia/ngx-generators.git"
   },
   "scripts": {
     "gen": "node generator/main"
@@ -19,7 +19,7 @@
     "readline-sync": "^1.4.4"
   },
   "bugs": {
-    "url": "https://github.com/SDV-Plurimedia/sdv-ng2-generators/issues"
+    "url": "https://github.com/SDV-Plurimedia/ngx-generators/issues"
   },
   "author": "R&D @ SDV Plurimédia"
 }
