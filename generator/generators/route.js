@@ -260,7 +260,7 @@ module.exports = {
 `;
           imports_displayrules += `import { `+displayrulesServiceName+` } from '`+displayrules_path+`';
 `;
-          appels_addRules += `this.displayRulesServices.push(_`+displayrulesServiceName+`);
+          appels_addRules += `this.displayRulesServices.push(this._`+displayrulesServiceName+`);
 `;
         }
     });
