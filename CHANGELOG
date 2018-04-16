@@ -1,5 +1,8 @@
 #Changelog SDV-NG2-Generators
 
+# 2.0.0 - 16/04/2018
+* BC: Passage à la compatibilité Angular5
+
 # 1.5.0 - 01/03/2018
 * UPD : Maj des générateurs de module et crud pour displayrules et widgets
 
