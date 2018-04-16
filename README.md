@@ -4,7 +4,7 @@ Ce package vous permet de créer un CRUD automatiquement
 
 ## Installation
 
-`npm install sdv-ng2-generators sdv-ng2-widgets`
+`npm install @sdvplurimedia/ngx-generators`
 Copier le dossier "_modules.dist" dans une installation valide de @angular/cli en tant que "src/app/_modules"
 Ajouter dans votre package.json dans les scripts:
 `"gen": "ng2gen",`
