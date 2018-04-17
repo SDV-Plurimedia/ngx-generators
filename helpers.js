@@ -96,7 +96,7 @@ module.exports = {
         fileContents.forEach((fileName) => {
             stats = fs.lstatSync(folder + '/' + fileName);
 
-            if (stats.isDirectory()) {
+            if (stats.isDirectory() || stats.isSymbolicLink()) {
                 filesTab = filesTab.concat(this.getFileInDirRecursive(folder + '/' + fileName));
             } else {
                 filesTab.push(folder + '/' + fileName);

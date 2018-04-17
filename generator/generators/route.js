@@ -67,8 +67,8 @@ module.exports = {
       var filename = file.split('/').pop();//juste le nom du fichier
       if(
         file.indexOf('widgets.ts') !== -1
-        && file.indexOf('dist') == -1
-        && file.indexOf('modules.widgets') == -1
+        && file.indexOf('dist') === -1
+        && file.indexOf('modules.widgets') === -1
       ){
           var widget_path = file.replace(basepath+"/","./").replace(".ts","");
           var className = helpers.camelize(filename.replace(".widgets.ts",""));
