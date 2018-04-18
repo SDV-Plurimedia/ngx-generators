@@ -1,5 +1,11 @@
 #Changelog SDV-NG2-Generators
 
+# 2.0.2 - 18/04/2018
+* ADD : Symlinks compatibility for gen route command
+
+# 2.0.1 - 17/04/2018
+* FIX : ff=unix
+
 # 2.0.0 - 16/04/2018
 * BC: Passage à la compatibilité Angular5
 
