@@ -1,6 +1,6 @@
 {
   "name": "@sdvplurimedia/ngx-generators",
-  "version": "2.0.3_beta",
+  "version": "2.0.3-beta.1",
   "license": "MIT",
   "description": "SDV Plurimédia - Angular Generators",
   "repository": {
