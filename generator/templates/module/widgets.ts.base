@@ -52,7 +52,7 @@ export const widgets = {
   widgets_dashboard: [
     // DEBUT-WIDGET-DASHBOARD-PLACEHOLDER
     // FIN-WIDGET-DASHBOARD-PLACEHOLDER
-  ]
+  ],
 
   widgets_actions_masse: [
     // DEBUT-WIDGET-ACTIONS-MASSE-PLACEHOLDER

@@ -8,8 +8,10 @@ import { Injectable } from '@angular/core';
 export class DisplayRules {
   public displayRulesServices: Array<Object> = [];
 
-  constructor() // RULES INCLUES AUTOMATIQUEMENT
-  // FIN RULES INCLUES AUTOMATIQUEMENT
+  constructor(
+    // RULES INCLUES AUTOMATIQUEMENT
+    // FIN RULES INCLUES AUTOMATIQUEMENT
+  )
   {
     // PUSH DES RULES INCLUES AUTOMATIQUEMENT
     // FIN PUSH DES RULES INCLUES AUTOMATIQUEMENT
