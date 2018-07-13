@@ -1,291 +1,468 @@
 var helpers = require('../../helpers');
 
 module.exports = {
-
-
-  generate: function(argv){
-
+  generate: function(argv) {
     console.log('Génération automatique des routes de module');
 
-    var modules = "";
-    var importmodules = "";
-    var basepath = "src/app/_modules";
+    var modules = '';
+    var importmodules = '';
+    var basepath = 'src/app/_modules';
 
     // préparation des includes du module
     var files = helpers.getFileInDirRecursive(basepath);
-    files.forEach((file)=>{
-      if(
+    files.forEach((file) => {
+      if (
         //on recherche les fichiers de module
-        file.indexOf('module.ts') !== -1
+        file.indexOf('module.ts') !== -1 &&
         //exclusions
-        && file.indexOf('dist') === -1
-        && file.indexOf('modules.module') === -1
-      ){
-          var filename = file.split('/').pop();//juste le nom du fichier
-          var module_path = file.replace(basepath,'.').replace(".ts","");
-          filename = filename.replace('.module.ts','').replace("mod_",'').replace("_spa",'');
-          var className = helpers.camelize(filename);
+        file.indexOf('dist') === -1 &&
+        file.indexOf('modules.module') === -1
+      ) {
+        var filename = file.split('/').pop(); //juste le nom du fichier
+        var module_path = file.replace(basepath, '.').replace('.ts', '');
+        filename = filename
+          .replace('.module.ts', '')
+          .replace('mod_', '')
+          .replace('_spa', '');
+        var className = helpers.camelize(filename);
 
-          modules += className+`Module,
+        modules +=
+          className +
+          `Module,
 `;
-          importmodules += "import {"+className+"Module} from '"+module_path+`';
+        importmodules +=
+          'import {' +
+          className +
+          "Module} from '" +
+          module_path +
+          `';
 `;
-
-        }
+      }
     });
 
-    var route = "";
-    var imports = "";
+    var route = '';
+    var imports = '';
     // préparation des routes
-    files.forEach((file)=>{
-      if(
+    files.forEach((file) => {
+      if (
         //on recherche les fichiers de module
-        file.indexOf('routing.ts') !== -1
+        file.indexOf('routing.ts') !== -1 &&
         //exclusions
-        && file.indexOf('dist') === -1
-        && file.indexOf('modules.routing') === -1
-      ){
-          var filename = file.split('/').pop();//juste le nom du fichier
-          var route_path = file.replace(basepath,'.').replace(".ts","");
+        file.indexOf('dist') === -1 &&
+        file.indexOf('modules.routing') === -1
+      ) {
+        var filename = file.split('/').pop(); //juste le nom du fichier
+        var route_path = file.replace(basepath, '.').replace('.ts', '');
 
-          filename = filename.replace('.routing.ts','').replace("mod_",'').replace("_spa",'');
-          var className = helpers.camelize(filename);
-          var routeName = helpers.lcfirst(className) + "Routes";
+        filename = filename
+          .replace('.routing.ts', '')
+          .replace('mod_', '')
+          .replace('_spa', '');
+        var className = helpers.camelize(filename);
+        var routeName = helpers.lcfirst(className) + 'Routes';
 
-          route += `...`+routeName+`,
+        route +=
+          `...` +
+          routeName +
+          `,
 `;
-          imports += `import { `+routeName+` } from '`+route_path+`';
+        imports +=
+          `import { ` +
+          routeName +
+          ` } from '` +
+          route_path +
+          `';
 `;
-        }
+      }
     });
 
     // préparation des widgets
     var widgets = [];
-    var import_widgets = "";
-    files.forEach((file)=>{
+    var import_widgets = '';
+    files.forEach((file) => {
+      var filename = file.split('/').pop(); //juste le nom du fichier
+      if (
+        file.indexOf('widgets.ts') !== -1 &&
+        file.indexOf('dist') === -1 &&
+        file.indexOf('modules.widgets') === -1
+      ) {
+        var widget_path = file.replace(basepath + '/', './').replace('.ts', '');
+        var className = helpers.camelize(filename.replace('.widgets.ts', ''));
+        var widgetName = helpers.lcfirst(className) + 'Widgets';
 
-      var filename = file.split('/').pop();//juste le nom du fichier
-      if(
-        file.indexOf('widgets.ts') !== -1
-        && file.indexOf('dist') === -1
-        && file.indexOf('modules.widgets') === -1
-      ){
-          var widget_path = file.replace(basepath+"/","./").replace(".ts","");
-          var className = helpers.camelize(filename.replace(".widgets.ts",""));
-          var widgetName = helpers.lcfirst(className) + "Widgets";
-
-            //on crée l'import des widgets
-            import_widgets += `import { widgets as `+widgetName+` } from '`+widget_path+`';
+        //on crée l'import des widgets
+        import_widgets +=
+          `import { widgets as ` +
+          widgetName +
+          ` } from '` +
+          widget_path +
+          `';
 `;
-            // on stoque un tableau des fichiers widgets
-            widgets.push({name: widgetName, path: widget_path});
-        }
+        // on stoque un tableau des fichiers widgets
+        widgets.push({ name: widgetName, path: widget_path });
+      }
     });
 
     // génération des merges de tableau pour chaque fichier widgets
-    var art_merge = "";
-    var comp_merge = "";
-    var comp_popup_merge = "";
-    var topic_merge = "";
-    var all_meta_merge = "";
-    var comp_activite_merge = ""; // les widgets du dashboard
-    var search_merge = ""; // les widgets pour la recherche
-    var search_result_merge = ""; // les widgets pour les resultats de la recherche
-    var dashboard_merge = ""; // les widgets du dashboard
+    var art_merge = '';
+    var comp_merge = '';
+    var comp_popup_merge = '';
+    var topic_merge = '';
+    var all_meta_merge = '';
+    var comp_activite_merge = ''; // les widgets du dashboard
+    var search_merge = ''; // les widgets pour la recherche
+    var search_result_merge = ''; // les widgets pour les resultats de la recherche
+    var dashboard_merge = ''; // les widgets du dashboard
+    var actions_masse_merge = ''; // les actions de masse additionnelles
 
     // Remplacement dans les fichiers
 
     var modules_base_dir = 'src/app/_modules/';
-    var template_modules_dir = __dirname+"/../templates/modules/";
+    var template_modules_dir = __dirname + '/../templates/modules/';
 
-    widgets.forEach(function(widget){
+    widgets.forEach(function(widget) {
       widget.path = widget.path.replace('./', '') + '.ts';
 
-      helpers.getFile(modules_base_dir + widget.path,(data)=>{
-
+      helpers.getFile(modules_base_dir + widget.path, (data) => {
         if (data.toString().indexOf('widgets_article_edition') !== -1) {
-          art_merge += `...`+widget.name+`.widgets_article_edition,
+          art_merge +=
+            `...` +
+            widget.name +
+            `.widgets_article_edition,
 `;
         }
 
         if (data.toString().indexOf('widgets_complement_panel') !== -1) {
-          comp_merge += `...`+widget.name+`.widgets_complement_panel,
+          comp_merge +=
+            `...` +
+            widget.name +
+            `.widgets_complement_panel,
 `;
         }
 
         if (data.toString().indexOf('widgets_complement_popup') !== -1) {
-          comp_popup_merge += `...`+widget.name+`.widgets_complement_popup,
+          comp_popup_merge +=
+            `...` +
+            widget.name +
+            `.widgets_complement_popup,
 `;
         }
 
         if (data.toString().indexOf('widgets_topic_edition') !== -1) {
-          topic_merge += `...`+widget.name+`.widgets_topic_edition,
+          topic_merge +=
+            `...` +
+            widget.name +
+            `.widgets_topic_edition,
 `;
         }
 
         if (data.toString().indexOf('widgets_all_meta') !== -1) {
-          all_meta_merge += "..."+widget.name+`.widgets_all_meta,
+          all_meta_merge +=
+            '...' +
+            widget.name +
+            `.widgets_all_meta,
 `;
         }
 
         if (data.toString().indexOf('widgets_complement_activite') !== -1) {
-          comp_activite_merge += `...`+widget.name+`.widgets_complement_activite,
+          comp_activite_merge +=
+            `...` +
+            widget.name +
+            `.widgets_complement_activite,
 `;
         }
         if (data.toString().indexOf('widgets_article_search') !== -1) {
-          search_merge += `...`+widget.name+`.widgets_article_search,
+          search_merge +=
+            `...` +
+            widget.name +
+            `.widgets_article_search,
 `;
         }
         if (data.toString().indexOf('widgets_article_search_result') !== -1) {
-          search_result_merge += `...`+widget.name+`.widgets_article_search_result,
+          search_result_merge +=
+            `...` +
+            widget.name +
+            `.widgets_article_search_result,
 `;
         }
         if (data.toString().indexOf('widgets_dashboard') !== -1) {
-          dashboard_merge += `...`+widget.name+`.widgets_dashboard,
+          dashboard_merge +=
+            `...` +
+            widget.name +
+            `.widgets_dashboard,
+`;
+        }
+        if (data.toString().indexOf('widgets_actions_masse') !== -1) {
+          actions_masse_merge +=
+            `...` +
+            widget.name +
+            `.widgets_actions_masse,
 `;
         }
       });
-
     });
 
     // création du fichier route si inexistant
     var routing_file = 'modules.routing.ts';
-    helpers.getFile(template_modules_dir+routing_file,(data)=>{
-      helpers.createFileIfNotExist(modules_base_dir, routing_file, data, (cb) => {
-        //maj du fichier de route
-        helpers.getFile(modules_base_dir+routing_file,(data)=>{
-          route = "\n"+route+"\n";
-          var ph_debut = "// ROUTE INCLUES AUTOMATIQUEMENT";
-          var ph_fin= "// FIN ROUTES INCLUES AUTOMATIQUEMENT";
-          var retour = helpers.placeInPlaceHolder(data,ph_debut,ph_fin,route);
+    helpers.getFile(template_modules_dir + routing_file, (data) => {
+      helpers.createFileIfNotExist(
+        modules_base_dir,
+        routing_file,
+        data,
+        (cb) => {
+          //maj du fichier de route
+          helpers.getFile(modules_base_dir + routing_file, (data) => {
+            route = '\n' + route + '\n';
+            var ph_debut = '// ROUTE INCLUES AUTOMATIQUEMENT';
+            var ph_fin = '// FIN ROUTES INCLUES AUTOMATIQUEMENT';
+            var retour = helpers.placeInPlaceHolder(
+              data,
+              ph_debut,
+              ph_fin,
+              route
+            );
 
-          imports = "\n"+imports+"\n";
-          var phi_debut = "// IMPORT INCLUS AUTOMATIQUEMENT";
-          var phi_fin= "// FIN IMPORT INCLUS AUTOMATIQUEMENT";
-          var retour = helpers.placeInPlaceHolder(retour,phi_debut,phi_fin,imports);
+            imports = '\n' + imports + '\n';
+            var phi_debut = '// IMPORT INCLUS AUTOMATIQUEMENT';
+            var phi_fin = '// FIN IMPORT INCLUS AUTOMATIQUEMENT';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              phi_debut,
+              phi_fin,
+              imports
+            );
 
-          helpers.createFile(modules_base_dir,routing_file,retour);
-        });
-      });
+            helpers.createFile(modules_base_dir, routing_file, retour);
+          });
+        }
+      );
     });
 
     // création du fichier module si inexistant
-    var module_file = "modules.module.ts";
-    helpers.getFile(template_modules_dir+module_file,(data)=>{
-      helpers.createFileIfNotExist(modules_base_dir, module_file, data, (cb)=>{
-        //maj du fichier de module
-        helpers.getFile(modules_base_dir+module_file,(data)=>{
-          importmodules = "\n"+importmodules+"\n";
-          var ph_debut = "// IMPORT INCLUS AUTOMATIQUEMENT";
-          var ph_fin= "// FIN IMPORT INCLUS AUTOMATIQUEMENT";
-          var retour = helpers.placeInPlaceHolder(data,ph_debut,ph_fin,importmodules);
+    var module_file = 'modules.module.ts';
+    helpers.getFile(template_modules_dir + module_file, (data) => {
+      helpers.createFileIfNotExist(
+        modules_base_dir,
+        module_file,
+        data,
+        (cb) => {
+          //maj du fichier de module
+          helpers.getFile(modules_base_dir + module_file, (data) => {
+            importmodules = '\n' + importmodules + '\n';
+            var ph_debut = '// IMPORT INCLUS AUTOMATIQUEMENT';
+            var ph_fin = '// FIN IMPORT INCLUS AUTOMATIQUEMENT';
+            var retour = helpers.placeInPlaceHolder(
+              data,
+              ph_debut,
+              ph_fin,
+              importmodules
+            );
 
-          modules = "\n"+modules+"\n";
-          var phi_debut = "// MODULE INCLUS AUTOMATIQUEMENT";
-          var phi_fin= "// FIN MODULE INCLUS AUTOMATIQUEMENT";
-          var retour = helpers.placeInPlaceHolder(retour,phi_debut,phi_fin,modules);
+            modules = '\n' + modules + '\n';
+            var phi_debut = '// MODULE INCLUS AUTOMATIQUEMENT';
+            var phi_fin = '// FIN MODULE INCLUS AUTOMATIQUEMENT';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              phi_debut,
+              phi_fin,
+              modules
+            );
 
-          helpers.createFile(modules_base_dir,module_file,retour);
-        });
-      });
+            helpers.createFile(modules_base_dir, module_file, retour);
+          });
+        }
+      );
     });
 
     // création du fichier widgets si inexistant
-    var widgets_file = "modules.widgets.ts";
-    helpers.getFile(template_modules_dir+widgets_file,(data)=>{
-      helpers.createFileIfNotExist(modules_base_dir, widgets_file, data, (cb)=>{
-        //maj du fichier d'widgets global
-        helpers.getFile(modules_base_dir+widgets_file,(data)=>{
-          import_widgets = "\n"+import_widgets+"\n";
-          var retour = helpers.placeInPlaceHolder(data,"// DEBUT-IMPORT-PLACEHOLDER","// FIN-IMPORT-PLACEHOLDER",import_widgets);
+    var widgets_file = 'modules.widgets.ts';
+    helpers.getFile(template_modules_dir + widgets_file, (data) => {
+      helpers.createFileIfNotExist(
+        modules_base_dir,
+        widgets_file,
+        data,
+        (cb) => {
+          //maj du fichier d'widgets global
+          helpers.getFile(modules_base_dir + widgets_file, (data) => {
+            import_widgets = '\n' + import_widgets + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              data,
+              '// DEBUT-IMPORT-PLACEHOLDER',
+              '// FIN-IMPORT-PLACEHOLDER',
+              import_widgets
+            );
 
-          art_merge = "\n"+art_merge+"\n";
-          var retour = helpers.placeInPlaceHolder(retour,"// DEBUT-WIDGET-ARTICLE-PLACEHOLDER","// FIN-WIDGET-ARTICLE-PLACEHOLDER",art_merge);
+            art_merge = '\n' + art_merge + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              '// DEBUT-WIDGET-ARTICLE-PLACEHOLDER',
+              '// FIN-WIDGET-ARTICLE-PLACEHOLDER',
+              art_merge
+            );
 
-          comp_merge = "\n"+comp_merge+"\n";
-          var retour = helpers.placeInPlaceHolder(retour,"// DEBUT-WIDGET-COMP-PANEL-PLACEHOLDER","// FIN-WIDGET-COMP-PANEL-PLACEHOLDER",comp_merge);
+            comp_merge = '\n' + comp_merge + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              '// DEBUT-WIDGET-COMP-PANEL-PLACEHOLDER',
+              '// FIN-WIDGET-COMP-PANEL-PLACEHOLDER',
+              comp_merge
+            );
 
-          comp_popup_merge = "\n"+comp_popup_merge+"\n";
-          var retour = helpers.placeInPlaceHolder(retour,"// DEBUT-WIDGET-COMP-POPUP-PLACEHOLDER","// FIN-WIDGET-COMP-POPUP-PLACEHOLDER",comp_popup_merge);
+            comp_popup_merge = '\n' + comp_popup_merge + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              '// DEBUT-WIDGET-COMP-POPUP-PLACEHOLDER',
+              '// FIN-WIDGET-COMP-POPUP-PLACEHOLDER',
+              comp_popup_merge
+            );
 
-          topic_merge = "\n"+topic_merge+"\n";
-          var retour = helpers.placeInPlaceHolder(retour,"// DEBUT-WIDGET-TOPIC-PLACEHOLDER","// FIN-WIDGET-TOPIC-PLACEHOLDER",topic_merge);
+            topic_merge = '\n' + topic_merge + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              '// DEBUT-WIDGET-TOPIC-PLACEHOLDER',
+              '// FIN-WIDGET-TOPIC-PLACEHOLDER',
+              topic_merge
+            );
 
-          all_meta_merge = "\n"+all_meta_merge+"\n";
-          var retour = helpers.placeInPlaceHolder(retour,"// DEBUT-WIDGET-ALL-META-PLACEHOLDER","// FIN-WIDGET-ALL-META-PLACEHOLDER",all_meta_merge);
+            all_meta_merge = '\n' + all_meta_merge + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              '// DEBUT-WIDGET-ALL-META-PLACEHOLDER',
+              '// FIN-WIDGET-ALL-META-PLACEHOLDER',
+              all_meta_merge
+            );
 
-          comp_activite_merge = "\n"+comp_activite_merge+"\n";
-          var retour = helpers.placeInPlaceHolder(retour, "// DEBUT-WIDGET-COMP-ACTIVITE-PLACEHOLDER", "// FIN-WIDGET-COMP-ACTIVITE-PLACEHOLDER", comp_activite_merge);
+            comp_activite_merge = '\n' + comp_activite_merge + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              '// DEBUT-WIDGET-COMP-ACTIVITE-PLACEHOLDER',
+              '// FIN-WIDGET-COMP-ACTIVITE-PLACEHOLDER',
+              comp_activite_merge
+            );
 
-          search_merge = "\n"+search_merge+"\n";
-          var retour = helpers.placeInPlaceHolder(retour, "// DEBUT-WIDGET-SEARCH-PLACEHOLDER", "// FIN-WIDGET-SEARCH-PLACEHOLDER", search_merge);
+            search_merge = '\n' + search_merge + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              '// DEBUT-WIDGET-SEARCH-PLACEHOLDER',
+              '// FIN-WIDGET-SEARCH-PLACEHOLDER',
+              search_merge
+            );
 
-          search_result_merge = "\n"+search_result_merge+"\n";
-          var retour = helpers.placeInPlaceHolder(retour, "// DEBUT-WIDGET-SEARCH-RESULT-PLACEHOLDER", "// FIN-WIDGET-SEARCH-RESULT-PLACEHOLDER", search_result_merge);
+            search_result_merge = '\n' + search_result_merge + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              '// DEBUT-WIDGET-SEARCH-RESULT-PLACEHOLDER',
+              '// FIN-WIDGET-SEARCH-RESULT-PLACEHOLDER',
+              search_result_merge
+            );
 
-          dashboard_merge = "\n"+dashboard_merge+"\n";
-          var retour = helpers.placeInPlaceHolder(retour, "// DEBUT-WIDGET-DASHBOARD-PLACEHOLDER", "// FIN-WIDGET-DASHBOARD-PLACEHOLDER", dashboard_merge);
+            dashboard_merge = '\n' + dashboard_merge + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              '// DEBUT-WIDGET-DASHBOARD-PLACEHOLDER',
+              '// FIN-WIDGET-DASHBOARD-PLACEHOLDER',
+              dashboard_merge
+            );
 
-          helpers.createFile(modules_base_dir,widgets_file,retour);
-        });
-      });
+            actions_masse_merge = '\n' + actions_masse_merge + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              '// DEBUT-WIDGET-ACTIONS-MASSE-PLACEHOLDER',
+              '// FIN-WIDGET-ACTIONS-MASSE-PLACEHOLDER',
+              actions_masse_merge
+            );
+
+            helpers.createFile(modules_base_dir, widgets_file, retour);
+          });
+        }
+      );
     });
 
-
-
-
-    var displayrules = "";
-    var imports_displayrules = "";
-    var appels_addRules = "";
+    var displayrules = '';
+    var imports_displayrules = '';
+    var appels_addRules = '';
     // préparation des règles d'affichage
-    files.forEach((file)=>{
-      if(
+    files.forEach((file) => {
+      if (
         //on recherche les fichiers de module
-        file.indexOf('displayrules.ts') !== -1
+        file.indexOf('displayrules.ts') !== -1 &&
         //exclusions
-        && file.indexOf('dist') === -1
-        && file.indexOf('modules.displayrules') === -1
-      ){
-          var filename = file.split('/').pop();//juste le nom du fichier
-          var displayrules_path = file.replace(basepath,'.').replace(".ts","");
+        file.indexOf('dist') === -1 &&
+        file.indexOf('modules.displayrules') === -1
+      ) {
+        var filename = file.split('/').pop(); //juste le nom du fichier
+        var displayrules_path = file.replace(basepath, '.').replace('.ts', '');
 
-          filename = filename.replace('.displayrules.ts','').replace("mod_",'').replace("_spa",'');
-          var className = helpers.camelize(filename);
-          var displayrulesName = helpers.lcfirst(className) + "DisplayRules";
-          var displayrulesServiceName = displayrulesName + "Service";
+        filename = filename
+          .replace('.displayrules.ts', '')
+          .replace('mod_', '')
+          .replace('_spa', '');
+        var className = helpers.camelize(filename);
+        var displayrulesName = helpers.lcfirst(className) + 'DisplayRules';
+        var displayrulesServiceName = displayrulesName + 'Service';
 
-          displayrules += `private _`+displayrulesServiceName+`: `+displayrulesServiceName+`,
+        displayrules +=
+          `private _` +
+          displayrulesServiceName +
+          `: ` +
+          displayrulesServiceName +
+          `,
 `;
-          imports_displayrules += `import { `+displayrulesServiceName+` } from '`+displayrules_path+`';
+        imports_displayrules +=
+          `import { ` +
+          displayrulesServiceName +
+          ` } from '` +
+          displayrules_path +
+          `';
 `;
-          appels_addRules += `this.displayRulesServices.push(this._`+displayrulesServiceName+`);
+        appels_addRules +=
+          `this.displayRulesServices.push(this._` +
+          displayrulesServiceName +
+          `);
 `;
-        }
+      }
     });
 
     // création du fichier des règles d'affichage si inexistant
     var displayrules_file = 'modules.displayrules.ts';
-    helpers.getFile(template_modules_dir+displayrules_file,(data)=>{
-      helpers.createFileIfNotExist(modules_base_dir, displayrules_file, data, (cb) => {
-        //maj du fichier des règles d'affichage
-        helpers.getFile(modules_base_dir+displayrules_file,(data)=>{
-          imports_displayrules = "\n"+imports_displayrules+"\n";
-          var retour = helpers.placeInPlaceHolder(data,"// DEBUT IMPORT PLACEHOLDER","// FIN IMPORT PLACEHOLDER",imports_displayrules);
+    helpers.getFile(template_modules_dir + displayrules_file, (data) => {
+      helpers.createFileIfNotExist(
+        modules_base_dir,
+        displayrules_file,
+        data,
+        (cb) => {
+          //maj du fichier des règles d'affichage
+          helpers.getFile(modules_base_dir + displayrules_file, (data) => {
+            imports_displayrules = '\n' + imports_displayrules + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              data,
+              '// DEBUT IMPORT PLACEHOLDER',
+              '// FIN IMPORT PLACEHOLDER',
+              imports_displayrules
+            );
 
-          displayrules = "\n"+displayrules+"\n";
-          retour = helpers.placeInPlaceHolder(retour,"// RULES INCLUES AUTOMATIQUEMENT","// FIN RULES INCLUES AUTOMATIQUEMENT",displayrules);
+            displayrules = '\n' + displayrules + '\n';
+            retour = helpers.placeInPlaceHolder(
+              retour,
+              '// RULES INCLUES AUTOMATIQUEMENT',
+              '// FIN RULES INCLUES AUTOMATIQUEMENT',
+              displayrules
+            );
 
-          appels_addRules = "\n"+appels_addRules+"\n";
-          retour = helpers.placeInPlaceHolder(retour,"// PUSH DES RULES INCLUES AUTOMATIQUEMENT","// FIN PUSH DES RULES INCLUES AUTOMATIQUEMENT",appels_addRules);
+            appels_addRules = '\n' + appels_addRules + '\n';
+            retour = helpers.placeInPlaceHolder(
+              retour,
+              '// PUSH DES RULES INCLUES AUTOMATIQUEMENT',
+              '// FIN PUSH DES RULES INCLUES AUTOMATIQUEMENT',
+              appels_addRules
+            );
 
-          helpers.createFile(modules_base_dir,displayrules_file,retour);
-        });
-      });
+            helpers.createFile(modules_base_dir, displayrules_file, retour);
+          });
+        }
+      );
     });
-
-
 
     return true;
   }
-
-}
+};
