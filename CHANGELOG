@@ -1,5 +1,8 @@
 #Changelog SDV-NG2-Generators
 
+# 2.0.4 - 13/07/2018
+* ADD : Générateur de route intègre les widgets pour les actions de masse
+
 # 2.0.2 - 18/04/2018
 * ADD : Symlinks compatibility for gen route command
 
