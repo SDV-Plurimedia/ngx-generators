@@ -1,5 +1,8 @@
 #Changelog SDV-NG2-Generators
 
+# 2.0.6 - 16/07/2018
+* FIX : Accolade supprimée
+
 # 2.0.5 - 16/07/2018
 * ADD : .editorconfig pour éviter les soucis de retour à la ligne CRLF
 
