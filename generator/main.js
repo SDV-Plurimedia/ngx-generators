@@ -24,7 +24,6 @@ if(process.argv.length == 2){
   fs.readdir(installPath, function(err, items) {
       for (var i=0; i<items.length; i++) {
           console.log(' - '+items[i].split('.').shift());
-      }
       console.log(' ');
       helpers.askData('Que voulez vous générer? ',generateType);
   });
