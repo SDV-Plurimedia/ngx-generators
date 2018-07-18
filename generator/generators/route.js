@@ -115,6 +115,7 @@ module.exports = {
     var search_result_merge = ''; // les widgets pour les resultats de la recherche
     var dashboard_merge = ''; // les widgets du dashboard
     var actions_masse_merge = ''; // les actions de masse additionnelles
+    var article_association_merge = ''; // les widgets pour les articles associés
 
     // Remplacement dans les fichiers
 
@@ -206,6 +207,13 @@ module.exports = {
             `...` +
             widget.name +
             `.widgets_actions_masse,
+`;
+        }
+        if (data.toString().indexOf('widgets_article_association') !== -1) {
+          article_association_merge +=
+            `...` +
+            widget.name +
+            `.widgets_article_association,
 `;
         }
       });
@@ -387,6 +395,14 @@ module.exports = {
               '// DEBUT-WIDGET-ACTIONS-MASSE-PLACEHOLDER',
               '// FIN-WIDGET-ACTIONS-MASSE-PLACEHOLDER',
               actions_masse_merge
+            );
+
+            article_association_merge = '\n' + article_association_merge + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              '// DEBUT-WIDGET-ARTICLE-ASSOCIATION-PLACEHOLDER',
+              '// FIN-WIDGET-ARTICLE-ASSOCIATION-PLACEHOLDER',
+              article_association_merge
             );
 
             helpers.createFile(modules_base_dir, widgets_file, retour);
