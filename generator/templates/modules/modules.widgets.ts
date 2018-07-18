@@ -27,6 +27,12 @@ export const widgets = {
     // FIN-WIDGET-TOPIC-PLACEHOLDER
   ],
 
+  // conf des widgets topics assoc
+  widgets_topic_assoc: [
+    // DEBUT-WIDGET-TOPIC-ASSOC-PLACEHOLDER
+    // FIN-WIDGET-TOPIC-ASSOC-PLACEHOLDER
+  ],
+
   // conf des widgets pour le all metas
   widgets_all_meta: [
     // DEBUT-WIDGET-ALL-META-PLACEHOLDER

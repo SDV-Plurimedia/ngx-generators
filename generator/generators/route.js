@@ -108,6 +108,7 @@ module.exports = {
     var comp_merge = '';
     var comp_popup_merge = '';
     var topic_merge = '';
+    var topic_assoc_merge = '';
     var all_meta_merge = '';
     var comp_activite_merge = ''; // les widgets du dashboard
     var search_merge = ''; // les widgets pour la recherche
@@ -153,6 +154,14 @@ module.exports = {
             `...` +
             widget.name +
             `.widgets_topic_edition,
+`;
+        }
+
+        if (data.toString().indexOf('widgets_topic_assoc') !== -1) {
+          topic_assoc_merge +=
+            `...` +
+            widget.name +
+            `.widgets_topic_assoc,
 `;
         }
 
@@ -322,6 +331,14 @@ module.exports = {
               '// DEBUT-WIDGET-TOPIC-PLACEHOLDER',
               '// FIN-WIDGET-TOPIC-PLACEHOLDER',
               topic_merge
+            );
+
+            topic_assoc_merge = '\n' + topic_assoc_merge + '\n';
+            var retour = helpers.placeInPlaceHolder(
+              retour,
+              '// DEBUT-WIDGET-TOPIC-ASSOC-PLACEHOLDER',
+              '// FIN-WIDGET-TOPIC-ASSOC-PLACEHOLDER',
+              topic_assoc_merge
             );
 
             all_meta_merge = '\n' + all_meta_merge + '\n';
