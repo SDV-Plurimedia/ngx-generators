@@ -27,6 +27,12 @@ export const widgets = {
     // FIN-WIDGET-TOPIC-PLACEHOLDER
   ],
 
+  // conf des widgets topics assoc
+  widgets_topic_assoc: [
+    // DEBUT-WIDGET-TOPIC-ASSOC-PLACEHOLDER
+    // FIN-WIDGET-TOPIC-ASSOC-PLACEHOLDER
+  ],
+
   // conf des widgets pour le all metas
   widgets_all_meta: [
     // DEBUT-WIDGET-ALL-META-PLACEHOLDER
@@ -56,5 +62,10 @@ export const widgets = {
   widgets_actions_masse: [
     // DEBUT-WIDGET-ACTIONS-MASSE-PLACEHOLDER
     // FIN-WIDGET-ACTIONS-MASSE-PLACEHOLDER
+  ],
+
+  widgets_article_association: [
+    // DEBUT-WIDGET-ARTICLE-ASSOCIATION-PLACEHOLDER
+    // FIN-WIDGET-ARTICLE-ASSOCIATION-PLACEHOLDER
   ]
 };
